@@ -28,7 +28,7 @@ cask:
   - visual-studio-code
   - warp
 app_store_apps:
-  - id: 1544743900 
+  - id: 1544743900
     name: Hush Nag Blocker
-  - id: 1147396723 
+  - id: 1147396723
     name: WhatsApp

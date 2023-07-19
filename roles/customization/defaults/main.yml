@@ -26,32 +26,32 @@ dock_items:
     position: 8
 macos_defaults:
   - domain: com.apple.AppleMultitouchTrackpad
-    key: Clicking 
+    key: Clicking
     value: true
     type: bool
     state: present
   - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
-    key: Clicking 
+    key: Clicking
     value: true
     type: bool
     state: present
   - domain: com.apple.AppleMultitouchTrackpad
-    key: TrackpadThreeFingerDrag 
+    key: TrackpadThreeFingerDrag
     value: true
     type: bool
     state: present
   - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
-    key: AppleMultitouchTrackpad 
+    key: AppleMultitouchTrackpad
     value: true
     type: bool
     state: present
   - domain: com.apple.AppleMultitouchTrackpad
-    key: TrackpadFourFingerVertSwipeGesture 
+    key: TrackpadFourFingerVertSwipeGesture
     value: 2
     type: int
     state: present
   - domain: com.apple.dock
-    key: showAppExposeGestureEnabled 
+    key: showAppExposeGestureEnabled
     value: true
     type: bool
     state: present
@@ -61,57 +61,57 @@ macos_defaults:
     type: float
     state: present
   - domain: dev.warp.Warp-Stable
-    key: AliasExpansionBannerSeen 
+    key: AliasExpansionBannerSeen
     value: "true"
     type: string
     state: present
   - domain: dev.warp.Warp-Stable
-    key: AliasExpansionEnabled 
+    key: AliasExpansionEnabled
     value: "true"
     type: string
     state: present
   - domain: dev.warp.Warp-Stable
-    key: Theme 
-    value: "\"RedRock\""
+    key: Theme
+    value: '"RedRock"'
     type: string
     state: present
   - domain: com.knollsoft.Rectangle
-    key: SUEnableAutomaticChecks 
+    key: SUEnableAutomaticChecks
     value: true
     type: bool
     state: present
   - domain: com.knollsoft.Rectangle
-    key: hideMenubarIcon 
+    key: hideMenubarIcon
     value: true
     type: bool
     state: present
   - domain: com.knollsoft.Rectangle
-    key: launchOnLogin 
+    key: launchOnLogin
     value: true
     type: bool
     state: present
   - domain: dev.kdrag0n.MacVirt
-    key: SUAutomaticallyUpdate 
+    key: SUAutomaticallyUpdate
     value: true
     type: bool
     state: present
   - domain: dev.kdrag0n.MacVirt
-    key: onboardingCompleted 
+    key: onboardingCompleted
     value: true
     type: bool
     state: present
   - domain: com.apple.HIToolbox
-    key: AppleCurrentKeyboardLayoutInputSourceID 
+    key: AppleCurrentKeyboardLayoutInputSourceID
     value: "com.apple.keylayout.USInternational-PC"
     type: string
     state: present
   - domain: com.apple.LaunchServices
-    key: LSQuarantine 
+    key: LSQuarantine
     value: false
     type: bool
     state: present
   - domain: com.apple.universalaccess
-    key: closeViewZoomFollowsFocus 
+    key: closeViewZoomFollowsFocus
     value: true
     type: bool
     state: present
@@ -121,52 +121,52 @@ macos_defaults:
     type: int
     state: present
   - domain: com.apple.finder
-    key: AppleShowAllFiles 
+    key: AppleShowAllFiles
     value: true
     type: bool
     state: present
   - domain: NSGlobalDomain
-    key: AppleShowAllExtensions 
+    key: AppleShowAllExtensions
     value: true
     type: bool
     state: present
   - domain: com.apple.Safari
-    key: HomePage 
+    key: HomePage
     value: "about:blank"
     type: string
     state: present
   - domain: com.apple.Safari
-    key: ShowFavoritesBar 
+    key: ShowFavoritesBar
     value: false
     type: bool
     state: present
   - domain: com.apple.Safari
-    key: FindOnPageMatchesWordStartsOnly 
+    key: FindOnPageMatchesWordStartsOnly
     value: false
     type: bool
     state: present
   - domain: com.apple.Safari
-    key: IncludeInternalDebugMenu 
+    key: IncludeInternalDebugMenu
     value: true
     type: bool
     state: present
   - domain: com.apple.Safari
-    key: IncludeDevelopMenu 
+    key: IncludeDevelopMenu
     value: true
     type: bool
     state: present
   - domain: com.apple.Safari
-    key: WebKitDeveloperExtrasEnabledPreferenceKey 
+    key: WebKitDeveloperExtrasEnabledPreferenceKey
     value: true
     type: bool
     state: present
   - domain: com.apple.Safari
-    key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled 
+    key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled
     value: true
     type: bool
     state: present
   - domain: NSGlobalDomain
-    key: WebKitDeveloperExtras 
+    key: WebKitDeveloperExtras
     value: true
     type: bool
     state: present
