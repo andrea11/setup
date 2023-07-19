@@ -1,0 +1,16 @@
+---
+- name: Set macOS defaults
+  community.general.osx_defaults:
+    domain: "{{ item.domain }}"
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+    type: "{{ item.type }}"
+  with_items: "{{ macos_defaults }}"
+
+- name: Setup Dock icons
+  include_tasks: dock.yml
+
+- name: Set up .zshrc
+  copy:
+    src: files/.zshrc
+    dest: ~/.zshrc

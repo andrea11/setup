@@ -1,0 +1,7 @@
+---
+- name: Setup laptop environment
+  hosts: localhost
+  roles:
+    - applications
+    - customization
+

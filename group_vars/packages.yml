@@ -1,0 +1,18 @@
+---
+packages:
+  - docker-compose
+  - dockutil
+  - geckodriver
+  - gnupg
+  - jq
+  - libfido2
+  - mas
+  - nvm
+  - openssh
+  - pinentry-mac
+  - pnpm
+  - protobuf
+  - watch
+  - wget
+  - ykman
+  - zoxide

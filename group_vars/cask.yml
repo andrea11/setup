@@ -1,0 +1,12 @@
+---
+cask:
+  - aws-vault
+  - chromedriver
+  - finicky
+  - firefox
+  - intellij-idea
+  - microsoft-edge
+  - orbstack
+  - rectangle
+  - visual-studio-code
+  - warp

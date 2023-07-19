@@ -1,0 +1,182 @@
+---
+defaults:
+  - domain: com.apple.AppleMultitouchTrackpad
+    key: Clicking 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+    key: Clicking 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.AppleMultitouchTrackpad
+    key: TrackpadThreeFingerDrag 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+    key: AppleMultitouchTrackpad 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.AppleMultitouchTrackpad
+    key: TrackpadFourFingerVertSwipeGesture 
+    value: 2
+    type: int
+    state: present
+  - domain: com.apple.dock
+    key: showAppExposeGestureEnabled 
+    value: true
+    type: bool
+    state: present
+  - domain: "Apple Global Domain"
+    key: com.apple.trackpad.scaling
+    value: 2
+    type: float
+    state: present
+  - domain: dev.warp.Warp-Stable
+    key: AliasExpansionBannerSeen 
+    value: "true"
+    type: string
+    state: present
+  - domain: dev.warp.Warp-Stable
+    key: AliasExpansionEnabled 
+    value: "true"
+    type: string
+    state: present
+  - domain: dev.warp.Warp-Stable
+    key: Theme 
+    value: "\"RedRock\""
+    type: string
+    state: present
+  - domain: com.knollsoft.Rectangle
+    key: SUEnableAutomaticChecks 
+    value: true
+    type: bool
+    state: present
+  - domain: com.knollsoft.Rectangle
+    key: hideMenubarIcon 
+    value: true
+    type: bool
+    state: present
+  - domain: com.knollsoft.Rectangle
+    key: launchOnLogin 
+    value: true
+    type: bool
+    state: present
+  - domain: dev.kdrag0n.MacVirt
+    key: SUAutomaticallyUpdate 
+    value: true
+    type: bool
+    state: present
+  - domain: dev.kdrag0n.MacVirt
+    key: onboardingCompleted 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.HIToolbox
+    key: AppleCurrentKeyboardLayoutInputSourceID 
+    value: "com.apple.keylayout.USInternational-PC"
+    type: string
+    state: present
+  - domain: com.apple.LaunchServices
+    key: LSQuarantine 
+    value: false
+    type: bool
+    state: present
+  - domain: com.apple.universalaccess
+    key: closeViewZoomFollowsFocus 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.BluetoothAudioAgent
+    key: "Apple Bitpool Min (editable)"
+    value: 40
+    type: int
+    state: present
+  - domain: com.apple.finder
+    key: AppleShowAllFiles 
+    value: true
+    type: bool
+    state: present
+  - domain: NSGlobalDomain
+    key: AppleShowAllExtensions 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.Safari
+    key: HomePage 
+    value: "about:blank"
+    type: string
+    state: present
+  - domain: com.apple.Safari
+    key: ShowFavoritesBar 
+    value: false
+    type: bool
+    state: present
+  - domain: com.apple.Safari
+    key: FindOnPageMatchesWordStartsOnly 
+    value: false
+    type: bool
+    state: present
+  - domain: com.apple.Safari
+    key: IncludeInternalDebugMenu 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.Safari
+    key: IncludeDevelopMenu 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.Safari
+    key: WebKitDeveloperExtrasEnabledPreferenceKey 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.Safari
+    key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled 
+    value: true
+    type: bool
+    state: present
+  - domain: NSGlobalDomain
+    key: WebKitDeveloperExtras 
+    value: true
+    type: bool
+    state: present
+  - domain: com.apple.Safari
+    key: UniversalSearchEnabled 
+    value: false
+    type: bool
+    state: present
+  - domain: com.google.Chrome
+    key: DisablePrintPreview 
+    value: true
+    type: bool
+    state: present
+  # Keyboard - Set US international language
+  - domain: com.apple.HIToolbox
+    key: AppleEnabledInputSources
+    value:
+      - '{ InputSourceKind = "Keyboard Layout", "KeyboardLayout ID" = 15000, "KeyboardLayout Name" = "USInternational-PC"; }'
+    type: array
+    state: present
+    array_add: true
+  - domain: com.apple.HIToolbox
+    key: AppleInputSourceHistory
+    value: '{InputSourceKind = "Keyboard Layout"; "KeyboardLayout ID" = 15000; "KeyboardLayout Name" = "USInternational-PC"; }'
+    type: array
+    state: present
+    array_add: true
+  - domain: com.apple.HIToolbox
+    key: AppleSelectedInputSources
+    value: '{ InputSourceKind = "Keyboard Layout"; "KeyboardLayout ID" = 15000; "KeyboardLayout Name" = "USInternational-PC"; }'
+    type: array
+    state: present
+    array_add: true
+  - domain: com.apple.dock
+    key: persistent-apps
+    value: 
+    type: array
+    state: present

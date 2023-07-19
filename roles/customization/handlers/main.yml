@@ -1,0 +1,11 @@
+---
+# handlers file for fubarhouse.macdock
+
+- name: clear_dock_cache
+  become: true
+  shell: "rm -rf /Library/Caches/com.apple.iconservices.store"
+  ignore_errors: true
+  
+- name: restart_dock
+  shell: "/usr/bin/killall Dock"
+  failed_when: false

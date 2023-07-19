@@ -1,0 +1,20 @@
+---
+- name: Install dockutil
+  homebrew_cask:
+    name: "dockutil"
+    state: present
+
+- name: Remove all dock items
+  # shell: "dockutil --remove all --no-restart"
+  shell: "dockutil --remove all"
+  register: removed_items_task
+  # notify:
+  #   - clear_dock_cache
+  #   - restart_dock
+
+- name: Add all dock items
+  shell: "dockutil --add '{{ item.path }}' --position {{ item.position }}"
+  with_items: "{{ dock_items }}"
+  loop_control:
+    label: "{{item.name}}"
+  when: (item.name ~ " was not found in") in item.stdout

@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Ansible
+*.retry
+*.log
+*.pid
+*.swp
+*.bak
+*.orig

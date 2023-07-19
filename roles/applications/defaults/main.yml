@@ -1,0 +1,34 @@
+---
+packages:
+  - docker-compose
+  - dockutil
+  - geckodriver
+  - gnupg
+  - jq
+  - libfido2
+  - mas
+  - nvm
+  - openssh
+  - pinentry-mac
+  - pnpm
+  - protobuf
+  - watch
+  - wget
+  - ykman
+  - zoxide
+cask:
+  - aws-vault
+  - chromedriver
+  - finicky
+  - firefox
+  - intellij-idea
+  - microsoft-edge
+  - orbstack
+  - rectangle
+  - visual-studio-code
+  - warp
+app_store_apps:
+  - id: 1544743900 
+    name: Hush Nag Blocker
+  - id: 1147396723 
+    name: WhatsApp
