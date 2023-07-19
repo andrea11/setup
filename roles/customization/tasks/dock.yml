@@ -1,20 +1,20 @@
 ---
 - name: Install dockutil
-  homebrew_cask:
+  community.general.homebrew_cask:
     name: "dockutil"
     state: present
 
 - name: Remove all dock items
-  # shell: "dockutil --remove all --no-restart"
-  shell: "dockutil --remove all"
+  # ansible.builtin.command: "dockutil --remove all --no-restart"
+  ansible.builtin.command: "dockutil --remove all"
   register: removed_items_task
+  changed_when: false
   # notify:
   #   - clear_dock_cache
   #   - restart_dock
 
 - name: Add all dock items
-  shell: "dockutil --add '{{ item.path }}' --position {{ item.position }}"
-  with_items: "{{ dock_items }}"
-  loop_control:
-    label: "{{item.name}}"
+  ansible.builtin.command: "dockutil --add '{{ item.path }}' --position {{ item.position }}"
+  changed_when: false
+  loop: "{{ dock_items | flatten(levels=1) }}"
   when: (item.name ~ " was not found in") in item.stdout

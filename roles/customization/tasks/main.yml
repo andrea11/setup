@@ -5,12 +5,13 @@
     key: "{{ item.key }}"
     value: "{{ item.value }}"
     type: "{{ item.type }}"
-  with_items: "{{ macos_defaults }}"
+  loop: "{{ macos_defaults | flatten(levels=1) }}"
 
 - name: Setup Dock icons
-  include_tasks: dock.yml
+  ansible.builtin.include_tasks: dock.yml
 
 - name: Set up .zshrc
-  copy:
+  ansible.builtin.copy:
     src: files/.zshrc
     dest: ~/.zshrc
+    mode: "0644"

@@ -10,24 +10,19 @@ name: CI
 
 jobs:
   lint:
-    name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the codebase.
-        uses: actions/checkout@v2
+      - name: Check out the codebase
+        uses: actions/checkout@v3
 
-      - name: Set up Python 3.
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.x"
+      - name: Set up Python 3
+        uses: actions/setup-python@v3
 
-      - name: Install test dependencies.
+      - name: Install test dependencies
         run: pip3 install yamllint ansible ansible-lint
 
-      - name: Lint code.
-        run: |
-          yamllint .
-          ansible-lint
+      - name: Lint code
+        uses: pre-commit/action@v3.0.0
   integration-test:
     name: Integration test
     runs-on: ${{ matrix.os }}
@@ -44,9 +39,9 @@ jobs:
       - name: Uninstall GitHub Actions' built-in Homebrew.
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
-          sudo rm -rf /usr/local/Homebrew
-          sudo rm -rf /usr/local/Caskroom
-          sudo rm -rf /usr/local/bin/brew
+          sudo rm -rf /usr/local/Homebrew || true
+          sudo rm -rf /usr/local/Caskroom || true
+          sudo rm -rf /usr/local/bin/brew || true
 
       - name: Uninstall GitHub Actions' built-in browser installs.
         run: |
