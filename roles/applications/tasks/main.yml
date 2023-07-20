@@ -9,6 +9,7 @@
     url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
     dest: /tmp/homebrew.sh
     mode: u=rwx,g=rx,o=r
+    when: not homebrew_check.stat.exists
 
 - name: Install Homebrew
   ansible.builtin.script: /tmp/homebrew.sh

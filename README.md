@@ -1,6 +1,7 @@
 # Project Name
 
 [![License](https://img.shields.io/badge/license-GPU-blue.svg)](https://github.com/NVIDIA/gpu-license)
+[![CI](https://github.com/andrea11/setup/actions/workflows/ci.yml/badge.svg)](https://github.com/andrea11/setup/actions/workflows/ci.yml)
 
 A brief description of what this project does and who it's for
 
