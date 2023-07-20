@@ -14,4 +14,4 @@
   ansible.builtin.copy:
     src: files/.zshrc
     dest: ~/.zshrc
-    mode: "0644"
+    mode: u=rw,g=rw,o=r
