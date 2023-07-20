@@ -1,0 +1,14 @@
+[user]
+    name = {{ user_name }}
+    email = {{ user_email }}
+{% if gpg %}
+    signingkey = ~/.ssh/id_signing_sk
+[commit]
+    gpgsign = true
+[gpg]
+    format = ssh
+    [gpg "ssh"]
+        allowedSignersFile = ~/.ssh/allowed_signers
+{% endif %}
+[url "git@github.com:(.*)/"]
+    insteadOf = https://github.com/$1/

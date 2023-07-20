@@ -215,3 +215,10 @@ macos_defaults:
     type: array
     state: present
     array_add: true
+git_workspaces:
+  - path: $HOME/Workspace/
+    gpg: true
+  - path: $HOME/Github/
+    gpg: true
+  - path: $HOME/Gitlab/
+    gpg: false

@@ -1,0 +1,11 @@
+---
+- name: Set up .zshrc
+  ansible.builtin.copy:
+    src:
+      - templates/.zshrc
+      - templates/.aliases
+    dest: $HOME
+    mode: u=rw,g=rw,o=r
+    checksum: sha1
+  register: copy_result
+  notify: Reload .zshrc

@@ -10,8 +10,7 @@
     type: "{{ item.type }}"
   loop: "{{ macos_defaults }}"
 
-- name: Set up .zshrc
-  ansible.builtin.copy:
-    src: files/.zshrc
-    dest: ~/.zshrc
-    mode: u=rw,g=rw,o=r
+- name: Setup terminal
+  ansible.builtin.include_tasks: terminal.yml
+# - name: Setup git
+#   ansible.builtin.include_tasks: git.yml
