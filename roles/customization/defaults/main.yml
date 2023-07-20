@@ -1,29 +1,26 @@
 ---
 dock_items:
-  - name: "Finder"
-    path: "/System/Applications/Finder.app"
-    position: 1
   - name: "Launchpad"
     path: "/System/Applications/Launchpad.app"
-    position: 2
-  - name: "Outlook"
+    position: 1
+  - name: "Microsoft Outlook"
     path: "/Applications/Microsoft Outlook.app"
-    position: 3
+    position: 2
   - name: "Safari"
-    path: "/Applications/Safari.app"
-    position: 4
+    path: "/System/Cryptexes/App/System/Applications/Safari.app"
+    position: 3
   - name: "Google Chrome"
     path: "/Applications/Google Chrome.app"
-    position: 5
-  - name: "Teams"
+    position: 4
+  - name: "Microsoft Teams"
     path: "/Applications/Microsoft Teams.app"
-    position: 6
-  - name: "Apple Store"
+    position: 5
+  - name: "App Store"
     path: "/Applications/App Store.app"
+    position: 6
+  - name: "System Settings"
+    path: "/System/Applications/System Settings.app"
     position: 7
-  - name: "System Preferences"
-    path: "/System/Applications/System Preferences.app"
-    position: 8
 macos_defaults:
   - domain: com.apple.AppleMultitouchTrackpad
     key: Clicking

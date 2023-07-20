@@ -4,17 +4,27 @@
     name: "dockutil"
     state: present
 
+- name: Get dock items
+  ansible.builtin.command: "dockutil --list"
+  register: dock_items
+  changed_when: false
+  failed_when: dock_items.rc != 0
+
 - name: Remove all dock items
   # ansible.builtin.command: "dockutil --remove all --no-restart"
   ansible.builtin.command: "dockutil --remove all"
-  register: removed_items_task
-  changed_when: false
+  register: remove_items_task_result
+  changed_when: dockutil --list != dock_items.stdout
+  failed_when: remove_items_task_result.rc != 0
   # notify:
   #   - clear_dock_cache
   #   - restart_dock
 
 - name: Add all dock items
   ansible.builtin.command: "dockutil --add '{{ item.path }}' --position {{ item.position }}"
-  changed_when: false
   loop: "{{ dock_items | flatten(levels=1) }}"
-  when: (item.name ~ " was not found in") in item.stdout
+  changed_when: not (item.name ~ " already exists in dock") in item.stdout
+  register: result
+  failed_when:
+    - result.rc != 0
+    - not (item.name ~ " already exists in dock") in item.stdout

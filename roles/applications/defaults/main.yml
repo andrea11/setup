@@ -1,7 +1,6 @@
 ---
 packages:
   - docker-compose
-  - dockutil
   - geckodriver
   - gnupg
   - jq
@@ -21,6 +20,7 @@ cask:
   - chromedriver
   - finicky
   - firefox
+  - hpedrorodrigues/tools/dockutil
   - intellij-idea
   - microsoft-edge
   - orbstack
