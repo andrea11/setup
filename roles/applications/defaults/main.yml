@@ -5,7 +5,6 @@ packages:
   - gnupg
   - jq
   - libfido2
-  - mas
   - nvm
   - openssh
   - pinentry-mac
@@ -21,14 +20,11 @@ cask:
   - finicky
   - firefox
   - hpedrorodrigues/tools/dockutil
+  - hush
   - intellij-idea
   - microsoft-edge
   - orbstack
   - rectangle
   - visual-studio-code
   - warp
-app_store_apps:
-  - id: 1544743900
-    name: Hush Nag Blocker
-  - id: 1147396723
-    name: WhatsApp
+  - whatsapp

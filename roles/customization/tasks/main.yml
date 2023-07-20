@@ -1,14 +1,14 @@
 ---
+- name: Setup Dock icons
+  ansible.builtin.include_tasks: dock.yml
+
 - name: Set macOS defaults
   community.general.osx_defaults:
     domain: "{{ item.domain }}"
     key: "{{ item.key }}"
     value: "{{ item.value }}"
     type: "{{ item.type }}"
-  loop: "{{ macos_defaults | flatten(levels=1) }}"
-
-- name: Setup Dock icons
-  ansible.builtin.include_tasks: dock.yml
+  loop: "{{ macos_defaults }}"
 
 - name: Set up .zshrc
   ansible.builtin.copy:

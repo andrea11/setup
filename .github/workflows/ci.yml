@@ -36,8 +36,17 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v2
 
+      - name: Set up Python 3
+        uses: actions/setup-python@v3
+
+      - name: Install test dependencies
+        run: pip3 install yamllint ansible ansible-lint
+
       - name: Uninstall GitHub Actions' built-in Homebrew.
-        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+        run: |
+          if which brew > /dev/null; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+          fi
 
       - name: Uninstall GitHub Actions' built-in browser installs.
         run: |
@@ -48,8 +57,8 @@ jobs:
 
       - name: Install test dependencies.
         run: |
-          sudo pip3 install --upgrade pip
-          sudo pip3 install ansible
+          pip3 install --upgrade pip
+          pip3 install ansible
 
       - name: Set up the test environment.
         run: |

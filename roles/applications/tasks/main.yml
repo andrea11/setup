@@ -20,16 +20,10 @@
   community.general.homebrew:
     name: "{{ item }}"
     state: present
-  loop: "{{ packages | flatten(levels=1) }}"
+  loop: "{{ packages }}"
 
 - name: Install packages from cask
   community.general.homebrew_cask:
     name: "{{ item }}"
     state: present
-  loop: "{{ cask | flatten(levels=1) }}"
-
-- name: Install Mac App Store apps
-  community.general.mas:
-    id: "{{ item.id }}"
-    state: present
-  loop: "{{ app_store_apps }}"
+  loop: "{{ cask }}"
