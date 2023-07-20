@@ -30,6 +30,6 @@
 
 - name: Install Mac App Store apps
   community.general.mas:
-    id: "{{ item.1.id }}"
+    id: "{{ item.id }}"
     state: present
-  loop: "{{ app_store_apps | subelements('items') }}"
+  loop: "{{ app_store_apps }}"
