@@ -87,6 +87,34 @@ macos_defaults:
     value: true
     type: bool
     state: present
+  - domain: com.knollsoft.Rectangle
+    key: bottomLeft
+    value:
+      - keyCode: 115
+        modifierFlags: 786432
+    type: bool
+    state: present
+  - domain: com.knollsoft.Rectangle
+    key: bottomRight
+    value:
+      - keyCode: 119
+        modifierFlags: 786432
+    type: bool
+    state: present
+  - domain: com.knollsoft.Rectangle
+    key: topLeft
+    value:
+      - keyCode: 123
+        modifierFlags: 917504
+    type: bool
+    state: present
+  - domain: com.knollsoft.Rectangle
+    key: topRight
+    value:
+      - keyCode: 124
+        modifierFlags: 917504
+    type: bool
+    state: present
   - domain: dev.kdrag0n.MacVirt
     key: SUAutomaticallyUpdate
     value: true
