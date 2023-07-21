@@ -6,21 +6,21 @@
 
 - name: Get dock items
   ansible.builtin.command: "dockutil --list"
-  register: dock_items_task
+  register: get_dock_items_task_result
   changed_when: false
-  failed_when: dock_items_task.rc != 0
+  failed_when: get_dock_items_task_result.rc != 0
 
 - name: Remove all dock items
   ansible.builtin.command: "dockutil --remove all"
-  register: remove_items_task_result
-  changed_when: dock_items_task.stdout != lookup('pipe', 'dockutil --list')
-  failed_when: remove_items_task_result.rc != 0
+  register: remove_dock_items_task_result
+  changed_when: get_dock_items_task_result.stdout != lookup('pipe', 'dockutil --list')
+  failed_when: remove_dock_items_task_result.rc != 0
 
 - name: Add all dock items
   ansible.builtin.command: "dockutil --add '{{ item.path }}' --position {{ item.position }}"
   loop: "{{ dock_items | flatten(levels=1) }}"
-  changed_when: not (item.name ~ " already exists in dock") in item.stdout
-  register: result
+  changed_when: not (item.name ~ " already exists in dock") in add_all_dock_items_task_result.stdout
+  register: add_all_dock_items_task_result
   failed_when:
-    - result.rc != 0
-    - not (item.name ~ " already exists in dock") in item.stdout
+    - add_all_dock_items_task_result.rc != 0
+    - not (item.name ~ " already exists in dock") in add_all_dock_items_task_result.stdout
