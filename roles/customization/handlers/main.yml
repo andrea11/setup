@@ -1,13 +1,4 @@
 ---
-# - name: clear_dock_cache
-#   become: true
-#   ansible.builtin.command: "rm -rf /Library/Caches/com.apple.iconservices.store"
-#   ignore_errors: true
-
-# - name: restart_dock
-#   ansible.builtin.command: "/usr/bin/killall Dock"
-#   failed_when: false
-
 - name: Reload .zshrc
   ansible.builtin.command: source $HOME/.zshrc
   changed_when: false

@@ -6,19 +6,15 @@
 
 - name: Get dock items
   ansible.builtin.command: "dockutil --list"
-  register: dock_items
+  register: dock_items_task
   changed_when: false
-  failed_when: dock_items.rc != 0
+  failed_when: dock_items_task.rc != 0
 
 - name: Remove all dock items
-  # ansible.builtin.command: "dockutil --remove all --no-restart"
   ansible.builtin.command: "dockutil --remove all"
   register: remove_items_task_result
-  changed_when: dockutil --list != dock_items.stdout
+  changed_when: dock_items_task.stdout != lookup('pipe', 'dockutil --list')
   failed_when: remove_items_task_result.rc != 0
-  # notify:
-  #   - clear_dock_cache
-  #   - restart_dock
 
 - name: Add all dock items
   ansible.builtin.command: "dockutil --add '{{ item.path }}' --position {{ item.position }}"
