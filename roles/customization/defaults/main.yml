@@ -24,13 +24,13 @@ dock_items:
 macos_defaults:
   - domain: com.apple.AppleMultitouchTrackpad
     key: Clicking
-    value: true
-    type: bool
+    value: 1
+    type: int
     state: present
   - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
     key: Clicking
-    value: true
-    type: bool
+    value: 1
+    type: int
     state: present
   - domain: com.apple.AppleMultitouchTrackpad
     key: TrackpadThreeFingerDrag
@@ -92,28 +92,28 @@ macos_defaults:
     value:
       - keyCode: 115
         modifierFlags: 786432
-    type: bool
+    type: array
     state: present
   - domain: com.knollsoft.Rectangle
     key: bottomRight
     value:
       - keyCode: 119
         modifierFlags: 786432
-    type: bool
+    type: array
     state: present
   - domain: com.knollsoft.Rectangle
     key: topLeft
     value:
       - keyCode: 123
         modifierFlags: 917504
-    type: bool
+    type: array
     state: present
   - domain: com.knollsoft.Rectangle
     key: topRight
     value:
       - keyCode: 124
         modifierFlags: 917504
-    type: bool
+    type: array
     state: present
   - domain: dev.kdrag0n.MacVirt
     key: SUAutomaticallyUpdate
@@ -178,7 +178,7 @@ macos_defaults:
   - domain: com.apple.Safari
     key: IncludeDevelopMenu
     value: true
-    type: bool
+    type: str
     state: present
   - domain: com.apple.Safari
     key: WebKitDeveloperExtrasEnabledPreferenceKey
@@ -199,19 +199,27 @@ macos_defaults:
   - domain: com.apple.HIToolbox
     key: AppleEnabledInputSources
     value:
-      - '{ InputSourceKind = "Keyboard Layout", "KeyboardLayout ID" = 15000, "KeyboardLayout Name" = "USInternational-PC"; }'
+      - InputSourceKind: "Keyboard Layout"
+        KeyboardLayout ID: 15000
+        KeyboardLayout Name: "USInternational-PC"
     type: array
     state: present
     array_add: true
   - domain: com.apple.HIToolbox
     key: AppleInputSourceHistory
-    value: '{InputSourceKind = "Keyboard Layout"; "KeyboardLayout ID" = 15000; "KeyboardLayout Name" = "USInternational-PC"; }'
+    value:
+      - InputSourceKind: "Keyboard Layout"
+        KeyboardLayout ID: 15000
+        KeyboardLayout Name: "USInternational-PC"
     type: array
     state: present
     array_add: true
   - domain: com.apple.HIToolbox
     key: AppleSelectedInputSources
-    value: '{ InputSourceKind = "Keyboard Layout"; "KeyboardLayout ID" = 15000; "KeyboardLayout Name" = "USInternational-PC"; }'
+    value:
+      - InputSourceKind: "Keyboard Layout"
+        KeyboardLayout ID: 15000
+        KeyboardLayout Name: "USInternational-PC"
     type: array
     state: present
     array_add: true

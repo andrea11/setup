@@ -2,7 +2,7 @@
 - name: Set up .zshrc
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "{{lookup('env','HOME')}}"
+    dest: "{{ lookup('env', 'HOME') }}"
     mode: u=rw,g=rw,o=r
     checksum: sha1
   with_fileglob:
