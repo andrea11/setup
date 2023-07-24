@@ -1,6 +1,6 @@
 ---
 - name: Setup Dock icons
-  ansible.builtin.include_tasks: dock.yml
+  ansible.builtin.import_tasks: dock.yml
 
 - name: Set macOS defaults
   community.general.osx_defaults:
@@ -11,6 +11,6 @@
   loop: "{{ macos_defaults }}"
 
 - name: Setup terminal
-  ansible.builtin.include_tasks: terminal.yml
+  ansible.builtin.import_tasks: terminal.yml
 # - name: Setup git
 #   ansible.builtin.include_tasks: git.yml

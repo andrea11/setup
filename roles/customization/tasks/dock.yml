@@ -9,14 +9,27 @@
   register: get_dock_items_task
   changed_when: false
   failed_when: get_dock_items_task.rc != 0
+  tags:
+    - test
 
 - name: Check if all dock items are present
   ansible.builtin.set_fact:
-    all_items_present: "{{ dock_items | map(attribute='path') | select('search', get_dock_items_task.stdout_lines) | list | length == dock_items | length }}"
+    all_items: "{{ all_items | default([]) | union([get_dock_items_task.stdout_lines | select('search', 'persistentApps') | select('search', item.name)]) }}"
+  loop: "{{ dock_items }}"
+  tags:
+    - test
+
+- name: Check if all dock items are present
+  ansible.builtin.set_fact:
+    all_items_present: "{{ all_items | flatten | length == dock_items | length }}"
+  tags:
+    - test
 
 - name: Check if there are no extra items
   ansible.builtin.set_fact:
-    no_extra_items: "{{ get_dock_items_task.stdout_lines | select('search', 'persistentApps') | list | length == dock_items | length }}"
+    no_extra_items: "{{ get_dock_items_task.stdout_lines | select('search', 'persistentApps') | length == dock_items | length }}"
+  tags:
+    - test
 
 - name: Remove all dock items
   ansible.builtin.command: dockutil --remove all
