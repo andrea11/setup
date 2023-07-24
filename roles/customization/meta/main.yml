@@ -1,11 +1,10 @@
 ---
 dependencies: []
-
 galaxy_info:
   role_name: customization
   author: andrea11
   description: Configure macOS environment
-  license: "GNU"
+  license: GNU
   min_ansible_version: "4.0"
   platforms:
     - name: macOS

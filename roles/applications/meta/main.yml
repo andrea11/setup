@@ -1,11 +1,10 @@
 ---
 dependencies: []
-
 galaxy_info:
   role_name: applications
   author: andrea11
   description: Install all applications
-  license: "GNU"
+  license: GNU
   min_ansible_version: "4.0"
   platforms:
     - name: macOS

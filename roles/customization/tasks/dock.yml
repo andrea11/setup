@@ -1,24 +1,33 @@
 ---
 - name: Install dockutil
   community.general.homebrew_cask:
-    name: "dockutil"
+    name: dockutil
     state: present
 
 - name: Get dock items
-  ansible.builtin.command: "dockutil --list"
-  register: get_dock_items_task_result
+  ansible.builtin.command: dockutil --list
+  register: get_dock_items_task
   changed_when: false
-  failed_when: get_dock_items_task_result.rc != 0
+  failed_when: get_dock_items_task.rc != 0
+
+- name: Check if all dock items are present
+  ansible.builtin.set_fact:
+    all_items_present: "{{ dock_items | map(attribute='path') | select('search', get_dock_items_task.stdout_lines) | list | length == dock_items | length }}"
+
+- name: Check if there are no extra items
+  ansible.builtin.set_fact:
+    no_extra_items: "{{ get_dock_items_task.stdout_lines | select('search', 'persistentApps') | list | length == dock_items | length }}"
 
 - name: Remove all dock items
-  ansible.builtin.command: "dockutil --remove all"
-  register: remove_dock_items_task_result
-  changed_when: get_dock_items_task_result.stdout != lookup('pipe', 'dockutil --list')
-  failed_when: remove_dock_items_task_result.rc != 0
+  ansible.builtin.command: dockutil --remove all
+  register: remove_all_dock_items_task
+  when: all_items_present and no_extra_items
+  changed_when: get_dock_items_task.stdout != lookup('pipe', 'dockutil --list')
+  failed_when: remove_all_dock_items_task.rc != 0
 
 - name: Add all dock items
-  ansible.builtin.command: "dockutil --add '{{ item.path }}' --position {{ item.position }}"
-  loop: "{{ dock_items | flatten(levels=1) }}"
+  ansible.builtin.command: dockutil --add '{{ item.path }}' --position {{ item.position }}
+  loop: "{{ dock_items }}"
   changed_when: not (item.name ~ " already exists in dock") in add_all_dock_items_task_result.stdout
   register: add_all_dock_items_task_result
   failed_when:

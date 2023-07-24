@@ -1,3 +1,4 @@
+---
 - name: Generate .gitconfig file
   ansible.builtin.template:
     src: .gitconfig.j2
