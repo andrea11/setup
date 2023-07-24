@@ -12,5 +12,6 @@
 
 - name: Setup terminal
   ansible.builtin.import_tasks: terminal.yml
+
 # - name: Setup git
 #   ansible.builtin.include_tasks: git.yml
