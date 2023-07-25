@@ -1,0 +1,18 @@
+# Load oh-my-zsh plugin manager
+autoload -U +X compinit && compinit
+
+# Load plugins
+{% for plugin in plugins %}
+source $HOME/.zsh/plugins/{{ plugin }}/{{ plugin }}.plugin.zsh
+{% endfor %}
+source $HOME/.zsh/lib/git.zsh
+
+# Load aliases
+source $HOME/.aliases
+
+# Load nvm
+export NVM_DIR="$HOME/.nvm"
+source $HOME/.nvm/nvm.sh
+
+# Fix for GPG
+export GPG_TTY=$(tty)

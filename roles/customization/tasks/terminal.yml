@@ -1,13 +1,36 @@
 ---
 - name: Set up .zshrc
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ lookup('env', 'HOME') }}"
     mode: u=rw,g=r,o=r
     checksum: sha1
-  with_fileglob:
-    - templates/.zshrc
+  loop:
+    - templates/.zshrc.j2
     - templates/.aliases
-  tags:
-    - test
   notify: Reload .zshrc
+
+- name: Check if .zsh folder exists
+  ansible.builtin.stat:
+    path: "{{ lookup('env', 'HOME') }}/.zsh"
+  register: zsh_folder
+
+- name: Create .zsh folder if it does not exist
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.zsh"
+    state: directory
+    mode: u=xrw,g=xr,o=x
+  when: not zsh_folder.stat.exists
+
+- name: Check if .zsh folder is a git repo
+  ansible.builtin.stat:
+    path: "{{ lookup('env', 'HOME') }}/.zsh/.git"
+  register: zsh_git
+
+- name: Clone ohmyzsh plugins if .zsh is not initialized
+  ansible.builtin.command: git sparse-checkout set --no-cone /plugins /lib # noqa command-instead-of-module
+  changed_when: true
+  args:
+    chdir: "{{ lookup('env', 'HOME') }}/.zsh"
+  when: zsh_git.stat.exists
+  notify: Checkout repository

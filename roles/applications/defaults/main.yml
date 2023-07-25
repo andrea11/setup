@@ -15,6 +15,7 @@ packages:
   - ykman
   - zoxide
 cask:
+  - 1password-cli
   - aws-vault
   - chromedriver
   - finicky

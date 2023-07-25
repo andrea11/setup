@@ -225,8 +225,20 @@ macos_defaults:
   #   array_add: true
 git_workspaces:
   - path: $HOME/Workspace/
-    gpg: true
+    gpg:
+      enabled: true
+      signing_key: "{{ lookup('env', 'HOME') }}/.ssh/id_signing_sk"
+      signing_key_pub: "{{ lookup('env', 'HOME') }}/.ssh/id_signing_sk.pub"
+      allowed_signers: "{{ lookup('env', 'HOME') }}/.ssh/allowed_signers"
   - path: $HOME/Github/
-    gpg: true
+    gpg:
+      enabled: true
+      program: /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+      signing_key: "{{ lookup('env', 'HOME') }}/.ssh/id_signing_sk"
+      signing_key_pub: "{{ lookup('env', 'HOME') }}/.ssh/id_signing_sk.pub"
+      allowed_signers: "{{ lookup('env', 'HOME') }}/.ssh/allowed_signers"
+    user_name:
+    user_email:
   - path: $HOME/Gitlab/
-    gpg: false
+    gpg:
+      enabled: false
