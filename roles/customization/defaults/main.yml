@@ -87,34 +87,34 @@ macos_defaults:
     value: true
     type: bool
     state: present
-  - domain: com.knollsoft.Rectangle
-    key: bottomLeft
-    value:
-      - keyCode: 115
-        modifierFlags: 786432
-    type: array
-    state: present
-  - domain: com.knollsoft.Rectangle
-    key: bottomRight
-    value:
-      - keyCode: 119
-        modifierFlags: 786432
-    type: array
-    state: present
-  - domain: com.knollsoft.Rectangle
-    key: topLeft
-    value:
-      - keyCode: 123
-        modifierFlags: 917504
-    type: array
-    state: present
-  - domain: com.knollsoft.Rectangle
-    key: topRight
-    value:
-      - keyCode: 124
-        modifierFlags: 917504
-    type: array
-    state: present
+  # - domain: com.knollsoft.Rectangle
+  #   key: bottomLeft
+  #   value:
+  #     - keyCode: "115"
+  #       modifierFlags: "786432"
+  #   type: array
+  #   state: present
+  # - domain: com.knollsoft.Rectangle
+  #   key: bottomRight
+  #   value:
+  #     - keyCode: "119"
+  #       modifierFlags: "786432"
+  #   type: array
+  #   state: present
+  # - domain: com.knollsoft.Rectangle
+  #   key: topLeft
+  #   value:
+  #     - keyCode: "123"
+  #       modifierFlags: "917504"
+  #   type: array
+  #   state: present
+  # - domain: com.knollsoft.Rectangle
+  #   key: topRight
+  #   value:
+  #     - keyCode: "124"
+  #       modifierFlags: "917504"
+  #   type: array
+  #   state: present
   - domain: dev.kdrag0n.MacVirt
     key: SUAutomaticallyUpdate
     value: true
@@ -178,7 +178,7 @@ macos_defaults:
   - domain: com.apple.Safari
     key: IncludeDevelopMenu
     value: true
-    type: str
+    type: string
     state: present
   - domain: com.apple.Safari
     key: WebKitDeveloperExtrasEnabledPreferenceKey
@@ -196,33 +196,33 @@ macos_defaults:
     type: bool
     state: present
   # Keyboard - Set US international language
-  - domain: com.apple.HIToolbox
-    key: AppleEnabledInputSources
-    value:
-      - InputSourceKind: "Keyboard Layout"
-        KeyboardLayout ID: 15000
-        KeyboardLayout Name: "USInternational-PC"
-    type: array
-    state: present
-    array_add: true
-  - domain: com.apple.HIToolbox
-    key: AppleInputSourceHistory
-    value:
-      - InputSourceKind: "Keyboard Layout"
-        KeyboardLayout ID: 15000
-        KeyboardLayout Name: "USInternational-PC"
-    type: array
-    state: present
-    array_add: true
-  - domain: com.apple.HIToolbox
-    key: AppleSelectedInputSources
-    value:
-      - InputSourceKind: "Keyboard Layout"
-        KeyboardLayout ID: 15000
-        KeyboardLayout Name: "USInternational-PC"
-    type: array
-    state: present
-    array_add: true
+  # - domain: com.apple.HIToolbox
+  #   key: AppleEnabledInputSources
+  #   value:
+  #     - InputSourceKind: "Keyboard Layout"
+  #       KeyboardLayout ID: "15000"
+  #       KeyboardLayout Name: "USInternational-PC"
+  #   type: array
+  #   state: present
+  #   array_add: true
+  # - domain: com.apple.HIToolbox
+  #   key: AppleInputSourceHistory
+  #   value:
+  #     - InputSourceKind: "Keyboard Layout"
+  #       KeyboardLayout ID: "15000"
+  #       KeyboardLayout Name: "USInternational-PC"
+  #   type: array
+  #   state: present
+  #   array_add: true
+  # - domain: com.apple.HIToolbox
+  #   key: AppleSelectedInputSources
+  #   value:
+  #     - InputSourceKind: "Keyboard Layout"
+  #       KeyboardLayout ID: "15000"
+  #       KeyboardLayout Name: "USInternational-PC"
+  #   type: array
+  #   state: present
+  #   array_add: true
 git_workspaces:
   - path: $HOME/Workspace/
     gpg: true
