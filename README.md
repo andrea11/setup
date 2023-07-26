@@ -33,7 +33,11 @@ Step-by-step guide on how to install the project
 
 ## Usage
 
-How to use the project and any relevant code snippets
+```
+  pipx install --include-deps ansible
+  pipx inject ansible jmespath
+  $HOME/.local/bin
+```
 
 ## Roadmap
 

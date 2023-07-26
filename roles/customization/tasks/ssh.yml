@@ -1,0 +1,66 @@
+---
+- name: Create ssh folder if not exists
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.ssh"
+    state: directory
+    mode: u=xrw,g=r
+
+- name: Generate ssh config file per each workspace
+  ansible.builtin.template:
+    src: git_ssh_config.j2
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_config"
+    mode: u=rw,g=r
+  loop: "{{ git_workspaces }}"
+  vars:
+    identity_file_path: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_authentication_ed25519.pub"
+
+- name: Verify if allowed_signers file exists
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  register: allowed_signers_file
+  loop: "{{ git_workspaces | map(attribute='ssh') | map(attribute='signature') | map(attribute='allowed_signers') | unique }}"
+
+- name: Create allowed_signers parent folders if not exist
+  ansible.builtin.file:
+    path: "{{ item.stat.path | dirname }}"
+    state: directory
+    mode: u=xrw,g=xr,o=x
+  loop: "{{ allowed_signers_file.results }}"
+
+- name: Create allowed_signers file if not exists
+  ansible.builtin.file:
+    path: "{{ item.stat.path }}"
+    state: touch
+    mode: u=rw,g=rw,o=r
+    modification_time: preserve
+    access_time: preserve
+  loop: "{{ allowed_signers_file.results }}"
+
+- name: Verify if allowed_signer is in allowed_signers file
+  ansible.builtin.lineinfile:
+    path: "{{ item.ssh.signature.allowed_signers }}"
+    line: "{{ item.user_email }} {{ item.ssh.signature.public_key }}"
+    state: present
+  loop: "{{ git_workspaces }}"
+
+- name: Generate authentication public ssh key files per each workspace
+  ansible.builtin.copy:
+    content: "{{ item.ssh.authentication.public_key }}"
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_authentication_ed25519.pub"
+    mode: u=rw,g=r
+  loop: "{{ git_workspaces }}"
+
+- name: Generate signature public ssh key files per each workspace
+  ansible.builtin.copy:
+    content: "{{ item.ssh.signature.public_key }}"
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_signature_ed25519.pub"
+    mode: u=rw,g=r
+  loop: "{{ git_workspaces }}"
+
+- name: Generate signature private ssh key files per each workspace
+  ansible.builtin.copy:
+    content: "{{ item.ssh.signature.private_key }}"
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_signature_ed25519"
+    mode: u=rw,g=r
+  when: item.ssh.signature.private_key is defined
+  loop: "{{ git_workspaces}}"

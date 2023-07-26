@@ -8,6 +8,7 @@ packages:
   - nvm
   - openssh
   - pinentry-mac
+  - pipx
   - pnpm
   - protobuf
   - watch
@@ -15,6 +16,7 @@ packages:
   - ykman
   - zoxide
 cask:
+  - 1password
   - 1password-cli
   - aws-vault
   - chromedriver
@@ -26,6 +28,7 @@ cask:
   - microsoft-edge
   - orbstack
   - rectangle
+  - spotify
   - visual-studio-code
   - warp
   - whatsapp

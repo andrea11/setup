@@ -1,20 +1,16 @@
 ---
-- name: Check Homebrew is installed
-  ansible.builtin.stat:
-    path: /usr/local/bin/brew
-  register: homebrew_check
-
 - name: Download Homebrew
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
     dest: /tmp/homebrew.sh
     mode: u=rwx,g=rx,o=r
-  when: not homebrew_check.stat.exists
 
 - name: Install Homebrew
+  become: true
+  become_user: "{{ lookup('env', 'USER') }}"
   ansible.builtin.script: /tmp/homebrew.sh
-  when:
-    - not homebrew_check.stat.exists
+  args:
+    creates: /usr/local/bin/brew
 
 - name: Install packages
   community.general.homebrew:
@@ -27,3 +23,41 @@
     name: "{{ item }}"
     state: present
   loop: "{{ cask }}"
+
+- name: Verify if finicky is configured
+  ansible.builtin.stat:
+    path: "{{ lookup('env', 'HOME') }}/.finicky.js"
+  register: finicky_check
+
+- name: Setup finicky if not yet configured
+  ansible.builtin.file:
+    src: "{{ role_path }}/templates/.finicky.js"
+    dest: "{{ lookup('env', 'HOME') }}/.finicky.js"
+    state: hard
+    mode: u=rw,g=rw,o=r
+  when: not finicky_check.stat.exists
+
+- name: Get all applications installed
+  find:
+    paths: /Applications
+    patterns: "*.app"
+    file_type: any
+  register: applications
+
+- name: Get all last used date for installed applications
+  command: "mdls '{{ item }}' -name kMDItemLastUsedDate"
+  loop: "{{ applications.files | map(attribute='path') }}"
+  register: applications_last_used_date
+  changed_when: false
+
+- name: Get all applications installed never opened before
+  set_fact:
+    applications_never_opened: "{{ applications_never_opened | default([]) | union([item.item]) }}"
+  no_log: true
+  loop: "{{ applications_last_used_date.results }}"
+  when: item.stdout == "kMDItemLastUsedDate = (null)"
+
+- name: Open all applications for the first time
+  ansible.builtin.command: open -a "{{ item }}"
+  loop: "{{ applications_never_opened }}"
+  failed_when: false

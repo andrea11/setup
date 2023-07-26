@@ -3,6 +3,8 @@
   ansible.builtin.import_tasks: dock.yml
 
 - name: Set macOS defaults
+  become: true
+  become_user: "{{ lookup('env', 'USER') }}"
   community.general.osx_defaults:
     domain: "{{ item.domain }}"
     key: "{{ item.key }}"
@@ -13,5 +15,8 @@
 - name: Setup terminal
   ansible.builtin.import_tasks: terminal.yml
 
-# - name: Setup git
-#   ansible.builtin.include_tasks: git.yml
+- name: Setup git
+  ansible.builtin.import_tasks: git.yml
+
+- name: Setup ssh
+  ansible.builtin.import_tasks: ssh.yml

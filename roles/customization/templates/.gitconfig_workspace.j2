@@ -1,22 +1,24 @@
 [user]
     name = {{ user_name }}
     email = {{ user_email }}
-{% if gpg.enabled %}
-    signingkey = {{ gpg.signing_key }}
+{% if ssh.signature is defined %}
+    signingkey = {{ ssh.signature.public_key }}
 
 [commit]
     gpgsign = true
+
+[core]
+    sshCommand = "ssh -F ~/.ssh/{{ workspace_name }}_config"
 
 [gpg]
     format = ssh
 
 [gpg "ssh"]
-    allowedSignersFile = {{ gpg.allowed_signers }}
-    {% if gpg.program %}
-          program = {{ gpg.program }}
-    {% endif %}
-
+    allowedSignersFile = {{ ssh.signature.allowed_signers }}
+{% if ssh.signature.program %}
+    program = {{ ssh.signature.program }}
+{% endif %}
 {% endif %}
 
-[url "git@github.com:(.*)/"]
-    insteadOf = https://github.com/$1/
+[url "git@github.com:$1/"]
+    insteadOf = https://github.com/(.*)/

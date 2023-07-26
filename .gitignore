@@ -1,0 +1,27 @@
+# Ansible
+.ansible/
+ansible.log
+ansible.cfg
+ansible.ini
+*.retry
+.vault_pass
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Logs and cahce
+*.log
+*.cache
+
+# Miscellaneous
+*.swp
+.DS_Store
+.idea/
+.vscode/

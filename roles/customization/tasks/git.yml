@@ -2,8 +2,15 @@
 - name: Generate .gitconfig file
   ansible.builtin.template:
     src: .gitconfig.j2
-    dest: $HOME/.gitconfig
+    dest: "{{ lookup('env', 'HOME') }}/.gitconfig"
     mode: u=rw,g=rw,o=r
+
+- name: Create workspace folder if not exists
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: u=xrw,g=xr,o=x
+  loop: "{{ git_workspaces }}"
 
 - name: Generate .gitconfig file per each workspace
   ansible.builtin.template:
@@ -12,41 +19,11 @@
     mode: u=rw,g=rw,o=r
   loop: "{{ git_workspaces }}"
   vars:
-    user_name: "{{ item.user_name }}"
-    user_email: "{{ item.user_email }}"
-    signing_key: "{{ item.gpg.signing_key }}"
-    gpg:
-      enabled: "{{ item.gpg.signing_key }}"
-      program: "{{ item.gpg.program }}"
-      allowed_signers: "{{ item.gpg.allowed_signers }}"
-
-- name: Verify if allowed_signers file exists
-  ansible.builtin.stat:
-    path: "{{ item }}"
-  register: allowed_signers_file
-  loop: "{{ git_workspaces | map(attribute='gpg') | map(attribute='allowed_signers') | unique }}"
-  when: item.gpg.enabled
-
-- name: Create allowed_signers parent folders if not exist
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    mode: u=xrw,g=xr,o=x
-  loop: "{{ allowed_signers_file.results | map(attribute='item') }}"
-  when: item.gpg.enabled
-
-- name: Create allowed_signers file if not exists
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: touch
-    mode: u=rw,g=rw,o=r
-  loop: "{{ allowed_signers_file.results | map(attribute='item') }}"
-  when: item.gpg.enabled
-
-- name: Verify if allowed_signers is in allowed_signers file
-  ansible.builtin.lineinfile:
-    path: "{{ item.gpg.allowed_signers }}"
-    line: "{{ item.user_email }} {{ item.gpg.signing_key }}"
-    state: present
-  loop: "{{ git_workspaces }}"
-  when: item.gpg.enabled
+    user_name: "{{ item.user_name}}"
+    user_email: "{{ item.user_email}}"
+    workspace_name: "{{ item.name }}"
+    ssh:
+      signature:
+        public_key: "{{ item.ssh.signature.public_key }}"
+        program: "{{ item.ssh.signature.program | default('') }}"
+        allowed_signers: "{{ item.ssh.signature.allowed_signers }}"

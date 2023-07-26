@@ -12,3 +12,4 @@ Icon
 *.swp
 *.bak
 *.orig
+.vault_pass
