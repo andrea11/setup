@@ -31,7 +31,7 @@
   ansible.builtin.file:
     path: "{{ item.stat.path }}"
     state: touch
-    mode: u=rw,g=rw,o=r
+    mode: u=rw,g=r,o=
     modification_time: preserve
     access_time: preserve
   loop: "{{ allowed_signers_file.results }}"
@@ -47,20 +47,20 @@
   ansible.builtin.copy:
     content: "{{ item.ssh.authentication.public_key }}"
     dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_authentication_ed25519.pub"
-    mode: u=rw,g=r
+    mode: u=rw,g=r,o=
   loop: "{{ git_workspaces }}"
 
 - name: Generate signature public ssh key files per each workspace
   ansible.builtin.copy:
     content: "{{ item.ssh.signature.public_key }}"
     dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_signature_ed25519.pub"
-    mode: u=rw,g=r
+    mode: u=rw,g=r,o=
   loop: "{{ git_workspaces }}"
 
 - name: Generate signature private ssh key files per each workspace
   ansible.builtin.copy:
     content: "{{ item.ssh.signature.private_key }}"
     dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_signature_ed25519"
-    mode: u=rw,g=r
+    mode: u=rw,g=r,o=
   when: item.ssh.signature.private_key is defined
   loop: "{{ git_workspaces}}"
