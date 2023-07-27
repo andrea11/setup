@@ -20,6 +20,10 @@
   register: allowed_signers_file
   loop: "{{ git_workspaces | map(attribute='ssh') | map(attribute='signature') | map(attribute='allowed_signers') | unique }}"
 
+- name: Debug client
+  ansible.builtin.debug:
+    msg: "{{ allowed_signers_file }}"
+
 - name: Create allowed_signers parent folders if not exist
   ansible.builtin.file:
     path: "{{ item.stat.path | dirname }}"
