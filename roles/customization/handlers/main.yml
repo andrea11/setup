@@ -1,4 +1,0 @@
----
-- name: Reload .zshrc
-  ansible.builtin.command: source $HOME/.zshrc
-  changed_when: false

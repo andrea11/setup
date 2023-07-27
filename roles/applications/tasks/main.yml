@@ -53,7 +53,6 @@
 - name: Get all applications installed never opened before
   ansible.builtin.set_fact:
     applications_never_opened: "{{ applications_never_opened | default([]) | union([item.item]) }}"
-  no_log: true
   loop: "{{ applications_last_used_date.results }}"
   when: item.stdout == "kMDItemLastUsedDate = (null)"
 

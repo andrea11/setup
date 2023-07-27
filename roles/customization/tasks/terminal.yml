@@ -1,13 +1,12 @@
 ---
 - name: Set up .zshrc
   ansible.builtin.template:
-    src: .gitconfig.j2
+    src: "{{ item }}"
     dest: "{{ lookup('env', 'HOME') }}/{{ item | splitext | first }}"
     mode: u=rw,g=r,o=r
   loop:
     - .zshrc.j2
     - .aliases.j2
-  notify: Reload .zshrc
 
 - name: Create .zsh folder if it does not exist
   ansible.builtin.file:
