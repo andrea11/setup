@@ -1,13 +1,12 @@
 ---
 - name: Set up .zshrc
-  ansible.builtin.file:
-    src: "{{ role_path }}/{{ item }}"
-    dest: "{{ lookup('env', 'HOME') }}/{{ item | basename | splitext | first }}"
+  ansible.builtin.template:
+    src: .gitconfig.j2
+    dest: "{{ lookup('env', 'HOME') }}/{{ item | splitext | first }}"
     mode: u=rw,g=r,o=r
-    state: hard
   loop:
-    - templates/.zshrc
-    - templates/.aliases
+    - .zshrc.j2
+    - .aliases.j2
   notify: Reload .zshrc
 
 - name: Create .zsh folder if it does not exist
@@ -22,7 +21,7 @@
   register: zsh_git
 
 - name: Setup ohmyzsh git remote, if .zsh is not initialized
-  ansible.builtin.command: git clone --no-checkout https://github.com/ohmyzsh/ohmyzsh # noqa command-instead-of-module
+  ansible.builtin.command: git clone --no-checkout https://github.com/ohmyzsh/ohmyzsh . # noqa command-instead-of-module
   args:
     chdir: "{{ lookup('env', 'HOME') }}/.zsh"
     creates: "{{ lookup('env', 'HOME') }}/.zsh/.git"

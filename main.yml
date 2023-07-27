@@ -4,6 +4,6 @@
   roles:
     - applications
     - customization
-  # post_tasks:
-  #   - name: Reboot MacOs
-  #     ansible.builtin.reboot:
+  post_tasks:
+    - name: Reboot MacOs
+      ansible.builtin.reboot:
