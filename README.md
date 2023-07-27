@@ -34,8 +34,8 @@ Step-by-step guide on how to install the project
 ## Usage
 
 ```
-  pipx install --include-deps ansible
-  pipx inject ansible jmespath
+  python3 -m pip install --user ansible
+  ansible-playbook --inventory ./localhost main.yml
   $HOME/.local/bin
 ```
 

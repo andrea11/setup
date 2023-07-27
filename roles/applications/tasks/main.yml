@@ -38,20 +38,20 @@
   when: not finicky_check.stat.exists
 
 - name: Get all applications installed
-  find:
+  ansible.builtin.find:
     paths: /Applications
     patterns: "*.app"
     file_type: any
   register: applications
 
 - name: Get all last used date for installed applications
-  command: "mdls '{{ item }}' -name kMDItemLastUsedDate"
+  ansible.builtin.command: "mdls '{{ item }}' -name kMDItemLastUsedDate"
   loop: "{{ applications.files | map(attribute='path') }}"
   register: applications_last_used_date
   changed_when: false
 
 - name: Get all applications installed never opened before
-  set_fact:
+  ansible.builtin.set_fact:
     applications_never_opened: "{{ applications_never_opened | default([]) | union([item.item]) }}"
   no_log: true
   loop: "{{ applications_last_used_date.results }}"
@@ -60,4 +60,5 @@
 - name: Open all applications for the first time
   ansible.builtin.command: open -a "{{ item }}"
   loop: "{{ applications_never_opened }}"
+  changed_when: false
   failed_when: false

@@ -8,8 +8,8 @@ packages:
   - nvm
   - openssh
   - pinentry-mac
-  - pipx
   - pnpm
+  - pre-commit
   - protobuf
   - watch
   - wget

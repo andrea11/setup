@@ -63,4 +63,4 @@
     dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_signature_ed25519"
     mode: u=rw,g=r,o=
   when: item.ssh.signature.private_key is defined
-  loop: "{{ git_workspaces}}"
+  loop: "{{ git_workspaces }}"

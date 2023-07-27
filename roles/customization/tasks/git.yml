@@ -19,8 +19,8 @@
     mode: u=rw,g=rw,o=r
   loop: "{{ git_workspaces }}"
   vars:
-    user_name: "{{ item.user_name}}"
-    user_email: "{{ item.user_email}}"
+    user_name: "{{ item.user_name }}"
+    user_email: "{{ item.user_email }}"
     workspace_name: "{{ item.name }}"
     ssh:
       signature:

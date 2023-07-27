@@ -34,7 +34,7 @@
     creates: "{{ lookup('env', 'HOME') }}/.zsh/.git/info/sparse-checkout"
 
 - name: Checkout ohmyzsh plugins
-  ansible.builtin.command: git checkout
+  ansible.builtin.command: git checkout # noqa command-instead-of-module
   args:
     chdir: "{{ lookup('env', 'HOME') }}/.zsh"
     creates: "{{ lookup('env', 'HOME') }}/.zsh/plugins"

@@ -17,10 +17,10 @@
 
 - name: Setup git
   ansible.builtin.import_tasks: git.yml
-  no_log: True
+  no_log: true
   tags: check
 
 - name: Setup ssh
   ansible.builtin.import_tasks: ssh.yml
-  no_log: True
+  no_log: true
   tags: check
