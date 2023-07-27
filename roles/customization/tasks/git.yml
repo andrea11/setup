@@ -27,3 +27,4 @@
         public_key: "{{ item.ssh.signature.public_key }}"
         program: "{{ item.ssh.signature.program | default('') }}"
         allowed_signers: "{{ item.ssh.signature.allowed_signers }}"
+        public_key_path: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_signature_ed25519.pub"

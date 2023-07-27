@@ -17,6 +17,8 @@
 
 - name: Setup git
   ansible.builtin.import_tasks: git.yml
+  tags: check
 
 - name: Setup ssh
   ansible.builtin.import_tasks: ssh.yml
+  tags: check

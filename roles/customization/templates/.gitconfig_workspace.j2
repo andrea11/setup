@@ -2,7 +2,7 @@
     name = {{ user_name }}
     email = {{ user_email }}
 {% if ssh.signature is defined %}
-    signingkey = {{ ssh.signature.public_key }}
+    signingkey = {{ ssh.signature.public_key_path }}
 
 [commit]
     gpgsign = true
