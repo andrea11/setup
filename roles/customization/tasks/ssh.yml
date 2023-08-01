@@ -61,6 +61,6 @@
   ansible.builtin.copy:
     content: "{{ item.ssh.signature.private_key }}"
     dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_signature_ed25519"
-    mode: u=rw,g=r,o=
+    mode: u=rw,go=
   when: item.ssh.signature.private_key is defined
   loop: "{{ git_workspaces }}"

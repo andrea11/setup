@@ -59,5 +59,6 @@
 - name: Open all applications for the first time
   ansible.builtin.command: open -a "{{ item }}"
   loop: "{{ applications_never_opened }}"
+  when: applications_never_opened is defined
   changed_when: false
   failed_when: false
