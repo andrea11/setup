@@ -10,6 +10,8 @@ packages:
   - pinentry-mac
   - pnpm
   - pre-commit
+  - pyenv
+  - pyenv-virtualenv
   - protobuf
   - watch
   - wget
