@@ -1,7 +1,6 @@
 ---
 - name: Setup Dock icons
   ansible.builtin.import_tasks: dock.yml
-  tags: check
 
 - name: Set macOS defaults
   become: true

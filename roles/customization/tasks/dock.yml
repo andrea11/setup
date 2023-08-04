@@ -23,6 +23,15 @@
   ansible.builtin.set_fact:
     extra_items: "{{ get_dock_items_task.stdout_lines | select('search', 'persistentApps') | length != dock_items | length }}"
 
+- name: Debug dock items
+  ansible.builtin.debug:
+    msg:
+      - "get_dock_items_task: {{ get_dock_items_task }}"
+      - "all_items: {{ all_items }}"
+      - "all_items_present: {{ all_items_present }}"
+      - "extra_items: {{ extra_items }}"
+      - "{{ lookup('pipe', 'dockutil --list') }}"
+
 - name: Remove all dock items
   ansible.builtin.command: dockutil --remove all
   register: remove_all_dock_items_task
