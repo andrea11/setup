@@ -25,6 +25,7 @@
             public_key: "public_key"
         user_name: "user_name"
         user_email: "user_email"
+    dock_items: [] # ci fails because of adding elements not working as expected
   roles:
     - applications
     - customization
