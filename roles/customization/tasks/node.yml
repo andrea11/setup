@@ -6,18 +6,25 @@
     state: present
 
 - name: Install latest node via nvm
-  ansible.builtin.command: nvm install --default node
+  ansible.builtin.shell: source "$(brew --prefix)/opt/nvm/nvm.sh" && nvm install --skip-default-packages --default node
   register: nvm_install_latest_node
-  changed_when: '"is already installed" not in nvm_install_latest_node.stdout'
+  args:
+    executable: /bin/zsh
+  changed_when: not nvm_install_latest_node.stdout.find("is already installed")
   failed_when: nvm_install_latest_node.rc != 0
 
 - name: Verify pnpm is installed via nvm exec
-  ansible.builtin.command: nvm exec pnpm --version
+  ansible.builtin.shell: source "$(brew --prefix)/opt/nvm/nvm.sh" && nvm exec pnpm --version
+  args:
+    executable: /bin/zsh
   register: pnpm_version
   changed_when: false
+  failed_when: false
 
 - name: Install pnpm via nvm
-  ansible.builtin.command: nvm exec npm install -g pnpm
+  ansible.builtin.shell: source "$(brew --prefix)/opt/nvm/nvm.sh" && nvm exec npm install -g pnpm
+  args:
+    executable: /bin/zsh
   register: pnpm_installation
   when: pnpm_version.rc != 0
   changed_when: true
