@@ -14,16 +14,12 @@
   ansible.builtin.set_fact:
     all_persistant_dock_item_names: "{{ all_persistant_dock_item_names | default([]) |
       union([get_dock_items_task.stdout_lines | select('search', 'persistentApps') |
-      map('regex_replace', '^(.*)\\t.*', '\\1')]) }}"
+      map('regex_replace', '^(.*?)\\t.*', '\\1')]) | flatten }}"
   loop: "{{ dock_items }}"
 
 - name: Check if all desired dock items are present
   ansible.builtin.set_fact:
-    all_items_present: "{{ all_persistant_dock_item_names | select('search', item.name) | flatten | length == all_persistant_dock_item_names | length }}"
-
-- name: Check if there are no extra items
-  ansible.builtin.set_fact:
-    extra_items: "{{ get_dock_items_task.stdout_lines | select('search', 'persistentApps') | length != all_persistant_dock_item_names | length }}"
+    all_items_present: "{{ dock_items | map(attribute='name') | difference(all_persistant_dock_item_names) | length == 0 }}"
 
 - name: Debug dock items
   ansible.builtin.debug:
@@ -31,24 +27,23 @@
       - "get_dock_items_task: {{ get_dock_items_task }}"
       - "all_persistant_dock_item_names: {{ all_persistant_dock_item_names }}"
       - "all_items_present: {{ all_items_present }}"
-      - "extra_items: {{ extra_items }}"
       - "{{ lookup('pipe', 'dockutil --list') }}"
 
 - name: Remove all dock items
   ansible.builtin.command: dockutil --remove all
   register: remove_all_dock_items_task
-  when: not all_items_present or extra_items
+  when: not all_items_present
   changed_when: get_dock_items_task.stdout != lookup('pipe', 'dockutil --list')
   failed_when: remove_all_dock_items_task.rc != 0
 
 - name: Add all dock items
   ansible.builtin.command: dockutil --add '{{ item.path }}' --position {{ item.position }}
-  loop: "{{ all_persistant_dock_item_names }}"
-  changed_when: '"{{ item.name }} already exists in dock" in add_all_dock_items_task_result.stdout'
+  loop: "{{ dock_items }}"
+  changed_when: '"{} already exists in dock".format(item.name) not in add_all_dock_items_task_result.stdout'
   register: add_all_dock_items_task_result
   failed_when:
     - add_all_dock_items_task_result.rc != 0
-    - '"{{ item.name }} already exists in dock" not in add_all_dock_items_task_result.stdout'
+    - '"{} already exists in dock".format(item.name) not in add_all_dock_items_task_result.stdout'
 
 - name: Debug all dock items
   ansible.builtin.debug:
@@ -56,5 +51,4 @@
       - "get_dock_items_task: {{ get_dock_items_task }}"
       - "all_persistant_dock_item_names: {{ all_persistant_dock_item_names }}"
       - "all_items_present: {{ all_items_present }}"
-      - "extra_items: {{ extra_items }}"
       - "{{ lookup('pipe', 'dockutil --list') }}"
