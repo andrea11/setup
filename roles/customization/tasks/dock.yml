@@ -43,7 +43,7 @@
   register: add_all_dock_items_task_result
   failed_when:
     - add_all_dock_items_task_result.rc != 0
-    - '"{} already exists in dock".format(item.name) not in add_all_dock_items_task_result.stdout'
+    - not add_all_dock_items_task_result.stdout.find("already exists in dock")
 
 - name: Debug all dock items
   ansible.builtin.debug:
@@ -51,4 +51,6 @@
       - "get_dock_items_task: {{ get_dock_items_task }}"
       - "all_persistant_dock_item_names: {{ all_persistant_dock_item_names }}"
       - "all_items_present: {{ all_items_present }}"
+      - "remove_all_dock_items_task: {{ remove_all_dock_items_task }}"
+      - "add_all_dock_items_task_result: {{ add_all_dock_items_task_result }}"
       - "{{ lookup('pipe', 'dockutil --list') }}"
