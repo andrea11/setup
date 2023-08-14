@@ -1,0 +1,25 @@
+---
+- name: Install pyenv
+  community.general.homebrew:
+    name: pyenv
+    state: present
+
+- name: Install pyenv-virtualenv
+  community.general.homebrew:
+    name: pyenv-virtualenv
+    state: present
+
+- name: Verify python is installed
+  ansible.builtin.command: pyenv versions --bare
+  changed_when: false
+  register: python_versions
+
+- name: Install latest python via pyenv
+  ansible.builtin.command: pyenv install --skip-existing $(pyenv install --list | grep -v - | grep -v b | tail -1)
+  changed_when: true
+  when: pyenv_version.rc != 0
+
+- name: Set global python version
+  ansible.builtin.command: pyenv global $(pyenv versions --bare | grep -v - | grep -v b | tail -1)
+  changed_when: true
+  when: pyenv_version.rc != 0

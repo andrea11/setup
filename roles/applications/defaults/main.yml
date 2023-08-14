@@ -8,7 +8,6 @@ packages:
   - nvm
   - openssh
   - pinentry-mac
-  - pnpm
   - pre-commit
   - pyenv
   - pyenv-virtualenv

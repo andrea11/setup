@@ -20,3 +20,9 @@
 
 - name: Setup ssh
   ansible.builtin.import_tasks: ssh.yml
+
+- name: Setup node
+  ansible.builtin.import_tasks: node.yml
+
+- name: Setup python
+  ansible.builtin.import_tasks: python.yml

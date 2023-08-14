@@ -1,0 +1,24 @@
+---
+
+- name: Install nvm
+  community.general.homebrew:
+    name: nvm
+    state: present
+
+- name: Install latest node via nvm
+  ansible.builtin.command: nvm install --default node
+  register: nvm_install_latest_node
+  changed_when: '"is already installed" not in nvm_install_latest_node.stdout'
+  failed_when: nvm_install_latest_node.rc != 0
+
+- name: Verify pnpm is installed via nvm exec
+  ansible.builtin.command: nvm exec pnpm --version
+  register: pnpm_version
+  changed_when: false
+
+- name: Install pnpm via nvm
+  ansible.builtin.command: nvm exec npm install -g pnpm
+  register: pnpm_installation
+  when: pnpm_version.rc != 0
+  changed_when: true
+  failed_when: pnpm_installation.rc != 0
