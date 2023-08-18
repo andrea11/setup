@@ -1,12 +1,7 @@
 ---
 
-- name: Install nvm
-  community.general.homebrew:
-    name: nvm
-    state: present
-
 - name: Install latest node via nvm
-  ansible.builtin.shell: source "$(brew --prefix)/opt/nvm/nvm.sh" && nvm install --skip-default-packages --default node
+  ansible.builtin.shell: source "$(brew --prefix nvm)/nvm.sh" && nvm install --skip-default-packages --default node
   register: nvm_install_latest_node
   args:
     executable: /bin/zsh
@@ -14,7 +9,7 @@
   failed_when: nvm_install_latest_node.rc != 0
 
 - name: Verify pnpm is installed via nvm exec
-  ansible.builtin.shell: source "$(brew --prefix)/opt/nvm/nvm.sh" && nvm exec pnpm --version
+  ansible.builtin.shell: source "$(brew --prefix nvm)/nvm.sh" && nvm exec pnpm --version
   args:
     executable: /bin/zsh
   register: pnpm_version
@@ -22,7 +17,7 @@
   failed_when: false
 
 - name: Install pnpm via nvm
-  ansible.builtin.shell: source "$(brew --prefix)/opt/nvm/nvm.sh" && nvm exec npm install -g pnpm
+  ansible.builtin.shell: source "$(brew --prefix nvm)/nvm.sh" && nvm exec npm install -g pnpm
   args:
     executable: /bin/zsh
   register: pnpm_installation

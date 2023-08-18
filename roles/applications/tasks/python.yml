@@ -1,13 +1,4 @@
 ---
-- name: Install pyenv
-  community.general.homebrew:
-    name: pyenv
-    state: present
-
-- name: Install pyenv-virtualenv
-  community.general.homebrew:
-    name: pyenv-virtualenv
-    state: present
 
 - name: Verify python is installed
   ansible.builtin.command: pyenv versions --bare

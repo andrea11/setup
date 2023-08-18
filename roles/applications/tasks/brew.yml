@@ -1,0 +1,28 @@
+---
+- name: Download Homebrew
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+    dest: /tmp/homebrew.sh
+    mode: u=rwx,g=rx,o=r
+
+- name: Install Homebrew
+  become: true
+  become_user: "{{ lookup('env', 'USER') }}"
+  ansible.builtin.script: /tmp/homebrew.sh
+  args:
+    creates: /usr/local/bin/brew
+
+- name: Install taps
+  community.general.homebrew_tap:
+    name: "{{ taps | join(',') }}"
+    state: present
+
+- name: Install packages
+  community.general.homebrew:
+    name: "{{ packages }}"
+    state: present
+
+- name: Install packages from cask
+  community.general.homebrew_cask:
+    name: "{{ casks }}"
+    state: present

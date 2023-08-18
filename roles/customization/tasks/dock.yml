@@ -34,7 +34,7 @@
 - name: Add all dock items
   ansible.builtin.command: dockutil --add '{{ item.path }}' --position {{ item.position }}
   loop: "{{ dock_items }}"
-  changed_when: '"{} already exists in dock".format(item.name) not in add_all_dock_items_task_result.stdout'
+  changed_when: item.name ~ " already exists in dock" not in add_all_dock_items_task_result.stdout
   register: add_all_dock_items_task_result
   failed_when:
     - add_all_dock_items_task_result.rc != 0
