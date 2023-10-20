@@ -1,4 +1,4 @@
-# Role Name
+# Customize dock
 
 Customize the dock with your favorite applications.
 

@@ -236,6 +236,204 @@
         - name: System Settings
           path: /System/Applications/System Settings.app
           position: 7
+    - role: customize_defaults
+      customize_defaults_settings:
+        - domain: com.apple.AppleMultitouchTrackpad
+          key: Clicking
+          value: 1
+          type: int
+          state: present
+        - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+          key: Clicking
+          value: 1
+          type: int
+          state: present
+        - domain: com.apple.AppleMultitouchTrackpad
+          key: TrackpadThreeFingerDrag
+          value: true
+          type: bool
+          state: present
+        - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+          key: AppleMultitouchTrackpad
+          value: true
+          type: bool
+          state: present
+        - domain: com.apple.AppleMultitouchTrackpad
+          key: TrackpadFourFingerVertSwipeGesture
+          value: 2
+          type: int
+          state: present
+        - domain: com.apple.dock
+          key: showAppExposeGestureEnabled
+          value: true
+          type: bool
+          state: present
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.scaling
+          value: 2
+          type: float
+          state: present
+        - domain: dev.warp.Warp-Stable
+          key: AliasExpansionBannerSeen
+          value: "true"
+          type: string
+          state: present
+        - domain: dev.warp.Warp-Stable
+          key: AliasExpansionEnabled
+          value: "true"
+          type: string
+          state: present
+        - domain: dev.warp.Warp-Stable
+          key: Theme
+          value: '"RedRock"'
+          type: string
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: SUEnableAutomaticChecks
+          value: true
+          type: bool
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: hideMenubarIcon
+          value: true
+          type: bool
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: launchOnLogin
+          value: true
+          type: bool
+          state: present
+        # - domain: com.knollsoft.Rectangle
+        #   key: bottomLeft
+        #   value:
+        #     - keyCode: "115"
+        #       modifierFlags: "786432"
+        #   type: array
+        #   state: present
+        # - domain: com.knollsoft.Rectangle
+        #   key: bottomRight
+        #   value:
+        #     - keyCode: "119"
+        #       modifierFlags: "786432"
+        #   type: array
+        #   state: present
+        # - domain: com.knollsoft.Rectangle
+        #   key: topLeft
+        #   value:
+        #     - keyCode: "123"
+        #       modifierFlags: "917504"
+        #   type: array
+        #   state: present
+        # - domain: com.knollsoft.Rectangle
+        #   key: topRight
+        #   value:
+        #     - keyCode: "124"
+        #       modifierFlags: "917504"
+        #   type: array
+        #   state: present
+        - domain: dev.kdrag0n.MacVirt
+          key: SUAutomaticallyUpdate
+          value: true
+          type: bool
+          state: present
+        - domain: dev.kdrag0n.MacVirt
+          key: onboardingCompleted
+          value: true
+          type: bool
+          state: present
+        - domain: com.apple.HIToolbox
+          key: AppleCurrentKeyboardLayoutInputSourceID
+          value: com.apple.keylayout.USInternational-PC
+          type: string
+          state: present
+        - domain: com.apple.LaunchServices
+          key: LSQuarantine
+          value: false
+          type: bool
+          state: present
+        - domain: com.apple.BluetoothAudioAgent
+          key: Apple Bitpool Min (editable)
+          value: 40
+          type: int
+          state: present
+        - domain: com.apple.finder
+          key: AppleShowAllFiles
+          value: true
+          type: bool
+          state: present
+        - domain: NSGlobalDomain
+          key: AppleShowAllExtensions
+          value: true
+          type: bool
+          state: present
+        - domain: com.apple.Safari
+          key: HomePage
+          value: about:blank
+          type: string
+          state: present
+        - domain: com.apple.Safari
+          key: ShowFavoritesBar
+          value: false
+          type: bool
+          state: present
+        - domain: com.apple.Safari
+          key: FindOnPageMatchesWordStartsOnly
+          value: false
+          type: bool
+          state: present
+        - domain: com.apple.Safari
+          key: IncludeInternalDebugMenu
+          value: true
+          type: bool
+          state: present
+        - domain: com.apple.Safari
+          key: IncludeDevelopMenu
+          value: true
+          type: string
+          state: present
+        - domain: com.apple.Safari
+          key: WebKitDeveloperExtrasEnabledPreferenceKey
+          value: true
+          type: bool
+          state: present
+        - domain: com.apple.Safari
+          key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled # yamllint disable-line
+          value: true
+          type: bool
+          state: present
+        - domain: NSGlobalDomain
+          key: WebKitDeveloperExtras
+          value: true
+          type: bool
+          state: present
+          # Keyboard - Set US international language
+          # - domain: com.apple.HIToolbox
+          #   key: AppleEnabledInputSources
+          #   value:
+          #     - InputSourceKind: "Keyboard Layout"
+          #       KeyboardLayout ID: "15000"
+          #       KeyboardLayout Name: "USInternational-PC"
+          #   type: array
+          #   state: present
+          #   array_add: true
+          # - domain: com.apple.HIToolbox
+          #   key: AppleInputSourceHistory
+          #   value:
+          #     - InputSourceKind: "Keyboard Layout"
+          #       KeyboardLayout ID: "15000"
+          #       KeyboardLayout Name: "USInternational-PC"
+          #   type: array
+          #   state: present
+          #   array_add: true
+          # - domain: com.apple.HIToolbox
+          #   key: AppleSelectedInputSources
+          #   value:
+          #     - InputSourceKind: "Keyboard Layout"
+          #       KeyboardLayout ID: "15000"
+          #       KeyboardLayout Name: "USInternational-PC"
+          #   type: array
+          #   state: present
+          #   array_add: true
   post_tasks:
     - name: Reboot MacOs
       ansible.builtin.reboot:

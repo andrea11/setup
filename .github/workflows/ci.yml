@@ -21,7 +21,7 @@ jobs:
       - name: Lint code
         uses: pre-commit/action@v3.0.0
       - name: Test the playbook's syntax.
-        run: ansible-playbook --inventory ./localhost --syntax-check main.yml
+        run: ansible-playbook --inventory localhost --syntax-check main.yml
   customize_dock_test:
     name: Role customize_dock test
     runs-on: macos-latest
@@ -31,7 +31,8 @@ jobs:
       - uses: ./.github/actions/setup-environment
       - name: Test the playbook.
         run:
-          ansible-playbook --inventory localhost roles/customize_dock/test.yml
+          ansible-playbook --inventory localhost
+          roles/customize_dock/tests/test.yml
         env:
           ANSIBLE_FORCE_COLOR: "1"
   # setup_git_test:
@@ -42,7 +43,7 @@ jobs:
   #       uses: actions/checkout@v3
   #     - uses: ./.github/actions/setup-environment
   #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory ./localhost roles/setup_git/test.yml
+  #       run: ansible-playbook --inventory localhost roles/setup_git/tests/test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
   # setup_ssh_test:
@@ -53,7 +54,7 @@ jobs:
   #       uses: actions/checkout@v3
   #     - uses: ./.github/actions/setup-environment
   #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory ./localhost roles/setup_ssh/test.yml
+  #       run: ansible-playbook --inventory localhost roles/setup_ssh/tests/test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
   # install_applications_test:
@@ -77,7 +78,7 @@ jobs:
   #         sudo rm -rf /usr/local/bin/firefox
   #     - name: Test the playbook.
   #       run:
-  #         ansible-playbook --inventory ./localhost
+  #         ansible-playbook --inventory localhost
   #         roles/install_applications/test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
@@ -89,7 +90,7 @@ jobs:
   #       uses: actions/checkout@v3
   #     - uses: ./.github/actions/setup-environment
   #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory ./localhost roles/setup_java/test.yml
+  #       run: ansible-playbook --inventory localhost roles/setup_java/tests/test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
   # setup_zsh_test:
@@ -100,7 +101,7 @@ jobs:
   #       uses: actions/checkout@v3
   #     - uses: ./.github/actions/setup-environment
   #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory ./localhost roles/setup_zsh/test.yml
+  #       run: ansible-playbook --inventory localhost roles/setup_zsh/tests/test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
   # launch_applications_first_time_test:
@@ -112,7 +113,7 @@ jobs:
   #     - uses: ./.github/actions/setup-environment
   #     - name: Test the playbook.
   #       run:
-  #         ansible-playbook --inventory ./localhost
+  #         ansible-playbook --inventory localhost
   #         roles/launch_applications_first_time/test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
@@ -124,7 +125,7 @@ jobs:
   #       uses: actions/checkout@v3
   #     - uses: ./.github/actions/setup-environment
   #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory ./localhost roles/setup_node/test.yml
+  #       run: ansible-playbook --inventory localhost roles/setup_node/tests/test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
   # setup_finicky_test:
@@ -136,7 +137,7 @@ jobs:
   #     - uses: ./.github/actions/setup-environment
   #     - name: Test the playbook.
   #       run:
-  #         ansible-playbook --inventory ./localhost roles/setup_finicky/test.yml
+  #         ansible-playbook --inventory localhost roles/setup_finicky/tests/test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
   # setup_python_test:
@@ -148,7 +149,7 @@ jobs:
   #     - uses: ./.github/actions/setup-environment
   #     - name: Test the playbook.
   #       run:
-  #         ansible-playbook --inventory ./localhost roles/setup_python/test.yml
+  #         ansible-playbook --inventory localhost roles/setup_python/tests/test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
   # integration-test:
@@ -164,13 +165,13 @@ jobs:
   #       uses: actions/checkout@v3
   #     - u./ses: .github/actions/setup
   #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory ./localhost test.yml
+  #       run: ansible-playbook --inventory localhost test.yml
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
   #     - name: Idempotence check.
   #       run: |
   #         idempotence=$(mktemp)
-  #         ansible-playbook --inventory ./localhost test.yml | tee -a ${idempotence}
+  #         ansible-playbook --inventory localhost test.yml | tee -a ${idempotence}
   #         tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
   #       env:
   #         ANSIBLE_FORCE_COLOR: "1"
