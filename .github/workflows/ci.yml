@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run:
           ansible-playbook --inventory ./localhost roles/customize_dock/test.yml
@@ -40,7 +40,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run: ansible-playbook --inventory ./localhost roles/setup_git/test.yml
         env:
@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run: ansible-playbook --inventory ./localhost roles/setup_ssh/test.yml
         env:
@@ -62,7 +62,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run:
           ansible-playbook --inventory ./localhost
@@ -75,7 +75,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run: ansible-playbook --inventory ./localhost roles/setup_java/test.yml
         env:
@@ -86,7 +86,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run: ansible-playbook --inventory ./localhost roles/setup_zsh/test.yml
         env:
@@ -97,7 +97,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run:
           ansible-playbook --inventory ./localhost
@@ -110,7 +110,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run: ansible-playbook --inventory ./localhost roles/setup_node/test.yml
         env:
@@ -121,7 +121,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run:
           ansible-playbook --inventory ./localhost roles/setup_finicky/test.yml
@@ -133,7 +133,7 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - uses: .github/actions/setup
+      - uses: ./.github/actions/setup
       - name: Test the playbook.
         run:
           ansible-playbook --inventory ./localhost roles/setup_python/test.yml
@@ -150,7 +150,7 @@ jobs:
   #   steps:
   #     - name: Check out the codebase.
   #       uses: actions/checkout@v3
-  #     - uses: .github/actions/setup
+  #     - u./ses: .github/actions/setup
   #     - name: Test the playbook.
   #       run: ansible-playbook --inventory ./localhost test.yml
   #       env:
