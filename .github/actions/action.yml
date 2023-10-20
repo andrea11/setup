@@ -6,20 +6,24 @@ runs:
     - name: Set up Python 3
       uses: actions/setup-python@v3
     - name: Install test dependencies
+      shell: zsh
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install --user ansible
     - name: Uninstall GitHub Actions' built-in Homebrew.
+      shell: zsh
       run: |
         if which brew > /dev/null; then
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
         fi
     - name: Uninstall GitHub Actions' built-in browser installs.
+      shell: zsh
       run: |
         sudo rm -rf /Applications/Google\ Chrome.app
         sudo rm -rf /usr/local/bin/chromedriver
         sudo rm -rf /Applications/Firefox.app
         sudo rm -rf /usr/local/bin/firefox
     - name: Set up the test environment.
+      shell: zsh
       run: |
         ansible-galaxy install -r requirements.yml
