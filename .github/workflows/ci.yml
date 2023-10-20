@@ -20,6 +20,7 @@ jobs:
           ls -la ./.github/workflows/
           ls -la ./.github/actions/
           ls -la ./.github/actions/setup-environment.yml
+          echo $PWD
       # - name: Set up Python 3
       #   uses: actions/setup-python@v3
       # - name: Install test dependencies
