@@ -3,7 +3,7 @@
   hosts: localhost
   remote_user: root
   roles:
-    - role: install_applications
+    - role: andrea11.macos_setup.install_applications
       install_applications_formulae:
         - jq
       install_applications_casks:

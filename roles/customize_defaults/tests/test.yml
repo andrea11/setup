@@ -3,7 +3,7 @@
   hosts: localhost
   remote_user: root
   roles:
-    - role: customize_defaults
+    - role: andrea11.macos_setup.customize_defaults
       customize_defaults_settings:
         - domain: com.apple.AppleMultitouchTrackpad
           key: Clicking

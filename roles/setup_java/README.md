@@ -30,7 +30,7 @@ None
 ```yaml
 - hosts: localhost
   roles:
-    - role: setup_java
+    - role: andrea11.macos_setup.setup_java
       setup_java_java_major_version: 11
       setup_java_certificate_websites:
         - url: "https://www.google.com"

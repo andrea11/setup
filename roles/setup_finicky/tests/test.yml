@@ -3,7 +3,7 @@
   hosts: localhost
   remote_user: root
   roles:
-    - role: setup_finicky
+    - role: andrea11.macos_setup.setup_finicky
       setup_finicky_rules:
         - match: () => finicky.getKeys().function
           browser: Google Chrome

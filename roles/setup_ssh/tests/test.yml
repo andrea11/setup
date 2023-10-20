@@ -3,7 +3,7 @@
   hosts: localhost
   remote_user: root
   roles:
-    - role: setup_ssh
+    - role: andrea11.macos_setup.setup_ssh
       setup_ssh_configurations:
         - name: test
           allowed_signers_path:

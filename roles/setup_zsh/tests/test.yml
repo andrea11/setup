@@ -3,7 +3,7 @@
   hosts: localhost
   remote_user: root
   roles:
-    - role: setup_zsh
+    - role: andrea11.macos_setup.setup_zsh
       setup_zsh_aliases:
         - alias: cd
           command: z

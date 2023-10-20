@@ -3,7 +3,7 @@
   hosts: localhost
   remote_user: root
   roles:
-    - role: setup_java
+    - role: andrea11.macos_setup.setup_java
       setup_java_certificate_websites:
         - url: "https://www.google.com"
           alias: "google"

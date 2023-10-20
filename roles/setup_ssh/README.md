@@ -47,7 +47,7 @@ None
 ```yaml
 - hosts: localhost
   roles:
-    - role: setup_ssh
+    - role: andrea11.macos_setup.setup_ssh
       setup_ssh_configurations:
         - name: work
           allowed_signers_path: "{{ lookup('env', 'HOME') }}/.ssh/allowed_signers"

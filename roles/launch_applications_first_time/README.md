@@ -19,7 +19,7 @@ None
 ```yaml
 - hosts: localhost
   roles:
-    - role: launch_applications_first_time
+    - role: andrea11.macos_setup.launch_applications_first_time
 ```
 
 ## License

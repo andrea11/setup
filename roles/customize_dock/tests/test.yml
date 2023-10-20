@@ -3,7 +3,7 @@
   hosts: localhost
   remote_user: root
   roles:
-    - role: customize_dock
+    - role: andrea11.macos_setup.customize_dock
       customize_dock_dock_items:
         - name: Launchpad
           path: /System/Applications/Launchpad.app

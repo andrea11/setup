@@ -35,7 +35,7 @@ This role depends on the following roles:
 ```yaml
 - hosts: localhost
   roles:
-    - role: customize_dock
+    - role: andrea11.macos_setup.customize_dock
       customize_defaults_settings:
         - domain: com.apple.AppleMultitouchTrackpad
           key: Clicking

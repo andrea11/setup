@@ -41,7 +41,7 @@ None
 ```yaml
 - hosts: localhost
   roles:
-    - role: setup_git
+    - role: andrea11.macos_setup.setup_git
       setup_git_workspaces:
         - name: "work"
           path: "{{ lookup('env', 'HOME') }}/Work"

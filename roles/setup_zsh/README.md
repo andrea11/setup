@@ -36,7 +36,7 @@ None
 ```yaml
 - hosts: localhost
   roles:
-    - role: setup_zsh
+    - role: andrea11.macos_setup.setup_zsh
       setup_zsh_aliases:
         - alias: ..
           command: cd ..

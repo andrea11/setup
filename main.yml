@@ -14,7 +14,7 @@
       3339633937633734340a633938363934366135313736356562383233326530623036306530323634
       3130
   roles:
-    - role: install_applications
+    - role: andrea11.macos_setup.install_applications
       install_applications_formulae:
         - docker-compose
         - geckodriver

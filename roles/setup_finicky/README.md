@@ -30,7 +30,7 @@ None
 ```yaml
 - hosts: localhost
   roles:
-    - role: setup_finicky
+    - role: andrea11.macos_setup.setup_finicky
       setup_finicky_default_browser: "Firefox"
       setup_finicky_redirect_http_to_https: true
       setup_finicky_setup_finicky_rules:

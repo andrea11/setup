@@ -25,7 +25,7 @@ None
 ```yaml
 - hosts: localhost
   roles:
-    - role: install_applications
+    - role: andrea11.macos_setup.install_applications
       install_applications_taps:
         - homebrew/cask-fonts
       install_applications_formulae:

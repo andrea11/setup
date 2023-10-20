@@ -3,4 +3,4 @@
   hosts: localhost
   remote_user: root
   roles:
-    - role: setup_git
+    - role: andrea11.macos_setup.setup_git

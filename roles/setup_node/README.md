@@ -19,7 +19,7 @@ None
 ```yaml
 - hosts: localhost
   roles:
-    - role: setup_node
+    - role: andrea11.macos_setup.setup_node
 ```
 
 ## License
