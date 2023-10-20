@@ -21,7 +21,7 @@ galaxy_info:
 dependencies:
   - role: andrea11.macos_setup.install_applications
     vars:
+      install_applications_formulae:
+        - sdkman-cli
       install_applications_taps:
         - sdkman/tap
-      install_applications_casks:
-        - sdkman-cli
