@@ -16,8 +16,11 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Python 3
         uses: actions/setup-python@v3
-      - name: Install test dependencies
+      - name: Install python test dependencies
         run: pip3 install yamllint ansible ansible-lint
+      - name: Install ansible collections.
+        run: |
+          ansible-galaxy install -r requirements.yml
       - name: Lint code
         uses: pre-commit/action@v3.0.0
       - name: Test the playbook's syntax.
@@ -35,123 +38,129 @@ jobs:
           roles/customize_dock/tests/test.yml
         env:
           ANSIBLE_FORCE_COLOR: "1"
-  # setup_git_test:
-  #   name: Role setup_git test
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Check out the codebase
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory localhost roles/setup_git/tests/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
-  # setup_ssh_test:
-  #   name: Role setup_ssh test
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Check out the codebase
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory localhost roles/setup_ssh/tests/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
-  # install_applications_test:
-  #   name: Role install_applications test
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Check out the codebase
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Uninstall GitHub Actions' built-in Homebrew.
-  #     shell: bash
-  #     run: |
-  #       if which brew > /dev/null; then
-  #         sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
-  #       fi
-  #     - name: Uninstall GitHub Actions' built-in browser installs.
-  #       run: |
-  #         sudo rm -rf /Applications/Google\ Chrome.app
-  #         sudo rm -rf /usr/local/bin/chromedriver
-  #         sudo rm -rf /Applications/Firefox.app
-  #         sudo rm -rf /usr/local/bin/firefox
-  #     - name: Test the playbook.
-  #       run:
-  #         ansible-playbook --inventory localhost
-  #         roles/install_applications/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
-  # setup_java_test:
-  #   name: Role setup_java test
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Check out the codebase
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory localhost roles/setup_java/tests/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
-  # setup_zsh_test:
-  #   name: Role setup_zsh test
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Check out the codebase
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory localhost roles/setup_zsh/tests/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
-  # launch_applications_first_time_test:
-  #   name: Role launch_applications_first_time test
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Check out the codebase
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Test the playbook.
-  #       run:
-  #         ansible-playbook --inventory localhost
-  #         roles/launch_applications_first_time/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
-  # setup_node_test:
-  #   name: Role setup_node test
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Check out the codebase
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Test the playbook.
-  #       run: ansible-playbook --inventory localhost roles/setup_node/tests/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
-  # setup_finicky_test:
-  #   name: Role setup_finicky test
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Check out the codebase
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Test the playbook.
-  #       run:
-  #         ansible-playbook --inventory localhost roles/setup_finicky/tests/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
-  # setup_python_test:
-  #   name: Role setup_python test
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Check out the codebase
-  #       uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Test the playbook.
-  #       run:
-  #         ansible-playbook --inventory localhost roles/setup_python/tests/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
+  setup_git_test:
+    name: Role setup_git test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost roles/setup_git/tests/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+  setup_ssh_test:
+    name: Role setup_ssh test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost roles/setup_ssh/tests/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+  install_applications_test:
+    name: Role install_applications test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Uninstall GitHub Actions' built-in Homebrew.
+        run: |
+          if which brew > /dev/null; then
+            sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+          fi
+      - name: Uninstall GitHub Actions' built-in browser installs.
+        run: |
+          sudo rm -rf /Applications/Google\ Chrome.app
+          sudo rm -rf /usr/local/bin/chromedriver
+          sudo rm -rf /Applications/Firefox.app
+          sudo rm -rf /usr/local/bin/firefox
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost
+          roles/install_applications/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+  setup_java_test:
+    name: Role setup_java test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost roles/setup_java/tests/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+  setup_zsh_test:
+    name: Role setup_zsh test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost roles/setup_zsh/tests/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+  launch_applications_first_time_test:
+    name: Role launch_applications_first_time test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost
+          roles/launch_applications_first_time/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+  setup_node_test:
+    name: Role setup_node test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost roles/setup_node/tests/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+  setup_finicky_test:
+    name: Role setup_finicky test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost
+          roles/setup_finicky/tests/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+  setup_python_test:
+    name: Role setup_python test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost
+          roles/setup_python/tests/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
   # integration-test:
   #   name: Integration test
   #   runs-on: ${{ matrix.os }}

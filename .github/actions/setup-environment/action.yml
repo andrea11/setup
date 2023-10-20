@@ -5,10 +5,10 @@ runs:
   steps:
     - name: Set up Python 3
       uses: actions/setup-python@v3
-    - name: Install test dependencies
+    - name: Install python dependencies
       shell: bash
       run: pip3 install ansible
-    - name: Set up the test environment.
+    - name: Install ansible collections.
       shell: bash
       run: |
         ansible-galaxy install -r requirements.yml

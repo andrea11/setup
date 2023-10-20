@@ -1,9 +1,4 @@
 ---
-- name: Install dockutil
-  community.general.homebrew_cask:
-    name: dockutil
-    state: present
-
 - name: Get dock items
   ansible.builtin.command: dockutil --list
   register: get_dock_items_task

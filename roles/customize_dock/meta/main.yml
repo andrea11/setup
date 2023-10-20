@@ -20,4 +20,4 @@ dependencies:
   - role: install_applications
     vars:
       install_applications_casks:
-        - dockutil
+        - hpedrorodrigues/tools/dockutil
