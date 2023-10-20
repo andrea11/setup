@@ -18,7 +18,8 @@ jobs:
           ls -la .
           ls -la .github/
           ls -la .github/workflows/
-          ls -la .github/actions/
+          ls -la ./.github/actions/setup-environment
+          ls -la ./.github/actions/setup-environment.yml
       # - name: Set up Python 3
       #   uses: actions/setup-python@v3
       # - name: Install test dependencies
