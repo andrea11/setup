@@ -43,7 +43,7 @@
 
 - name: Add allowed_signer to allowed_signers file if needed
   ansible.builtin.lineinfile:
-    path: "{{ item.allowed_signer_path }}"
+    path: "{{ item.allowed_signers_path }}"
     line: "{{ item.user_email }} {{ item.signature.public_key }}"
     regexp:
       ^{{ item.user_email | ansible.builtin.regex_escape }} {{

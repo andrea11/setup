@@ -4,7 +4,7 @@
 
     # Load plugins
     source $HOME/.zsh/lib/git.zsh
-    {%- for plugin in plugins -%}
+    {%- for plugin in oh_my_zsh_plugins -%}
         source $HOME/.zsh/plugins/{{plugin}}/{{plugin}}.plugin.zsh
     {% endfor %}
 {% endif %}

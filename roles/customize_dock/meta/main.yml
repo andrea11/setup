@@ -17,7 +17,7 @@ galaxy_info:
     - macos
     - customization
 dependencies:
-  - role: install_applications
+  - role: andrea11.macos_setup.install_applications
     vars:
       install_applications_casks:
         - hpedrorodrigues/tools/dockutil

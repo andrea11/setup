@@ -83,7 +83,7 @@ jobs:
       - name: Test the playbook.
         run:
           ansible-playbook --inventory localhost
-          roles/install_applications/test.yml
+          roles/install_applications/tests/test.yml
         env:
           ANSIBLE_FORCE_COLOR: "1"
   setup_java_test:
@@ -120,7 +120,7 @@ jobs:
       - name: Test the playbook.
         run:
           ansible-playbook --inventory localhost
-          roles/launch_applications_first_time/test.yml
+          roles/launch_applications_first_time/tests/test.yml
         env:
           ANSIBLE_FORCE_COLOR: "1"
   setup_node_test:

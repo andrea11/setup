@@ -10,3 +10,7 @@
     dest: "{{ lookup('env', 'HOME') }}/.finicky.js"
     mode: u=rw,g=rw,o=r
   when: not finicky_check.stat.exists
+  vars:
+    default_browser: "{{ setup_finicky_default_browser }}"
+    redirect_http_to_https: "{{ setup_finicky_redirect_http_to_https }}"
+    setup_finicky_rules: "{{ setup_finicky_setup_finicky_rules }}"

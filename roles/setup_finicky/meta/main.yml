@@ -20,7 +20,7 @@ galaxy_info:
     - customization
     - macos
 dependencies:
-  - role: install_applications
+  - role: andrea11.macos_setup.install_applications
     vars:
       install_applications_casks:
         - finicky
