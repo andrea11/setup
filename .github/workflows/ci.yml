@@ -9,11 +9,23 @@ on:
     - cron: 0 0 15 * *
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out the codebase
+  #       uses: actions/checkout@v3
+  # - name: Set up Python 3
+  #   uses: actions/setup-python@v3
+  # - name: Install test dependencies
+  #   run: pip3 install yamllint ansible ansible-lint
+  # - name: Lint code
+  #   uses: pre-commit/action@v3.0.0
+  # - name: Test the playbook's syntax.
+  #   run: ansible-playbook --inventory ./localhost --syntax-check main.yml
+  customize_dock_test:
+    name: Role customize_dock test
+    runs-on: macos-latest
     steps:
-      - name: Check out the codebase
-        uses: actions/checkout@v3
       - run: |
           ls -la .
           ls -la ./.github/
@@ -21,18 +33,6 @@ jobs:
           ls -la ./.github/actions/
           ls -la ./.github/actions/setup-environment.yml
           echo $PWD
-      # - name: Set up Python 3
-      #   uses: actions/setup-python@v3
-      # - name: Install test dependencies
-      #   run: pip3 install yamllint ansible ansible-lint
-      # - name: Lint code
-      #   uses: pre-commit/action@v3.0.0
-      # - name: Test the playbook's syntax.
-      #   run: ansible-playbook --inventory ./localhost --syntax-check main.yml
-  # customize_dock_test:
-  #   name: Role customize_dock test
-  #   runs-on: macos-latest
-  #   steps:
   #     - name: Check out the codebase
   #       uses: actions/checkout@v3
   #     - uses: ./.github/actions/setup-environment
