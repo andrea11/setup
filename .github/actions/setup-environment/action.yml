@@ -7,13 +7,7 @@ runs:
       uses: actions/setup-python@v3
     - name: Install test dependencies
       shell: bash
-      run: install ansible
-    - name: Uninstall GitHub Actions' built-in Homebrew.
-      shell: bash
-      run: |
-        if which brew > /dev/null; then
-          sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
-        fi
+      run: pip3 install ansible
     - name: Set up the test environment.
       shell: bash
       run: |

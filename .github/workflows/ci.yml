@@ -63,6 +63,12 @@ jobs:
   #     - name: Check out the codebase
   #       uses: actions/checkout@v3
   #     - uses: ./.github/actions/setup-environment
+  #     - name: Uninstall GitHub Actions' built-in Homebrew.
+  #     shell: bash
+  #     run: |
+  #       if which brew > /dev/null; then
+  #         sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+  #       fi
   #     - name: Uninstall GitHub Actions' built-in browser installs.
   #       run: |
   #         sudo rm -rf /Applications/Google\ Chrome.app
