@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: andrea11
+  description: Install applications with brew
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+    - name: macOS
+      versions:
+        - all
+  galaxy_tags:
+    - applications
+    - brew
+    - cask
+    - homebrew
+    - macos
+    - formulae
+dependencies: []

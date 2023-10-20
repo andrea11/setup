@@ -1,0 +1,26 @@
+[user]
+    name = {{ user_name }}
+    email = {{ user_email }}
+
+{%- if ssh.signature is defined +%}
+    signingkey = {{ ssh.public_key_path }}
+
+    [commit]
+        gpgsign = true
+
+    [core]
+        sshCommand = "ssh -F ~/.ssh/{{ workspace_name }}_config"
+
+    [gpg]
+        format = ssh
+
+    [gpg "ssh"]
+        allowedSignersFile = {{ ssh.allowed_signers_path }}
+
+    {%- if ssh.program +%}
+        program = {{ ssh.program }}
+    {%- endif +%}
+{%- endif +%}
+
+[url "git@github.com:$1/"]
+    insteadOf = https://github.com/(.*)/

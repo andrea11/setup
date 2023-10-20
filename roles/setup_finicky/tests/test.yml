@@ -1,0 +1,9 @@
+---
+- name: "Test setup_finicky role"
+  hosts: localhost
+  remote_user: root
+  roles:
+    - role: setup_finicky
+      setup_finicky_rules:
+        - match: () => finicky.getKeys().function
+          browser: Google Chrome

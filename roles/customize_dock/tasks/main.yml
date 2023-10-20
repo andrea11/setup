@@ -1,0 +1,47 @@
+---
+- name: Install dockutil
+  community.general.homebrew_cask:
+    name: dockutil
+    state: present
+
+- name: Get dock items
+  ansible.builtin.command: dockutil --list
+  register: get_dock_items_task
+  changed_when: false
+  failed_when: get_dock_items_task.rc != 0
+
+- name: Extract persistent dock item names
+  ansible.builtin.set_fact:
+    all_persistant_dock_item_names: "{{ all_persistant_dock_item_names |
+      default([])\
+      \ | union([get_dock_items_task.stdout_lines | select('search',
+      'persistentApps')\
+      \ | map('regex_replace', '^(.*?)\\t.*', '\\1')]) | flatten }}"
+  loop: "{{ customize_dock_dock_items }}"
+
+- name: Check if all desired dock items are present
+  ansible.builtin.set_fact:
+    all_desired_items_present: "{{ customize_dock_dock_items |
+      map(attribute='name') | difference(all_persistant_dock_item_names)\
+      \ | length == 0 }}"
+
+- name: Remove all dock items
+  ansible.builtin.command: dockutil --remove all
+  register: remove_all_dock_items_task
+  when: not all_desired_items_present
+  changed_when:
+    get_dock_items_task.stdout_lines | difference(lookup('pipe', 'dockutil
+    --list')) | select('search', 'persistentApps') | length > 0
+  failed_when: remove_all_dock_items_task.rc != 0
+
+- name: Add all dock items
+  ansible.builtin.command:
+    dockutil --add '{{ item.path }}' --position {{ item.position }}
+  loop: "{{ customize_dock_dock_items }}"
+  changed_when:
+    item.name ~ " already exists in dock" not in
+    add_all_dock_items_task_result.stdout
+  register: add_all_dock_items_task_result
+  failed_when:
+    - add_all_dock_items_task_result.rc != 0
+    - not add_all_dock_items_task_result.stdout.find("already exists in dock")

@@ -1,0 +1,24 @@
+---
+- name: "Test setup_zsh role"
+  hosts: localhost
+  remote_user: root
+  roles:
+    - role: setup_zsh
+      setup_zsh_aliases:
+        - alias: cd
+          command: z
+        - alias: npm
+          command: pnpm
+        - alias: ..
+          command: cd ..
+        - alias: "..."
+          command: cd ../..
+        - alias: "...."
+          command: cd ../../..
+      setup_zsh_use_oh_my_zsh: true
+      setup_zsh_oh_my_zsh_plugins:
+        - git
+        - zoxide
+      setup_zsh_use_sdkman: true
+      setup_zsh_use_nvm: true
+      setup_zsh_use_gpg: true

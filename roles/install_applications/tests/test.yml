@@ -1,0 +1,12 @@
+---
+- name: "Test install_applications role"
+  hosts: localhost
+  remote_user: root
+  roles:
+    - role: install_applications
+      install_applications_formulae:
+        - jq
+      install_applications_casks:
+        - visual-studio-code
+      install_applications_taps:
+        - sdkman/tap

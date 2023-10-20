@@ -1,0 +1,10 @@
+Include ~/.ssh/config
+
+Host *
+{%- if identity_agent is defined +%}
+    IdentityAgent "{{identity_agent}}"
+{%- endif +%}
+{%- if identity_file_path is defined +%}
+IdentityFile {{ identity_file_path }}
+{%- endif +%}
+IdentitiesOnly yes

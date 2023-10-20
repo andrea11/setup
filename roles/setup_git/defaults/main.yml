@@ -1,0 +1,3 @@
+---
+setup_git_workspaces: []
+setup_git_default_editor: code --wait

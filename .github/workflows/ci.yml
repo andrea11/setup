@@ -1,12 +1,12 @@
 ---
 name: CI
-"on":
+on:
   pull_request:
   push:
     branches:
       - main
   schedule:
-    - cron: "0 0 15 * *"
+    - cron: 0 0 15 * *
 
 jobs:
   lint:
@@ -31,7 +31,6 @@ jobs:
         os:
           - macos-latest
           - macos-13
-
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v2

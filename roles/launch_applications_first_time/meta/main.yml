@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  author: andrea11
+  description:
+    Launch all never open applications for the first time to manually setup
+    them
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+    - name: macOS
+      versions:
+        - all
+  galaxy_tags:
+    - applications
+    - customization
+    - macos
+dependencies: []

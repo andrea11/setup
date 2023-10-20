@@ -1,0 +1,28 @@
+---
+- name: Retrieve latest python version available
+  ansible.builtin.command:
+    pyenv install --list | grep -v - | grep -v '[a-zA-Z]' | tail -1
+  changed_when: false
+  register: latest_python_version
+
+- name: Get installed python versions
+  ansible.builtin.command: pyenv versions --bare
+  changed_when: false
+  register: installed_python_versions
+
+- name: Check if latest python version is installed
+  ansible.builtin.debug:
+    msg: Latest python version is already installed
+  when: latest_python_version.stdout in installed_python_versions.stdout_lines
+  register: is_latest_python_version_installed
+
+- name: Install latest python via pyenv
+  ansible.builtin.command:
+    pyenv install --skip-existing {{ latest_python_version }}
+  changed_when: true
+  when: not is_latest_python_version_installed
+
+- name: Set global python version
+  ansible.builtin.command: pyenv global {{ latest_python_version }}
+  changed_when: true
+  when: not is_latest_python_version_installed

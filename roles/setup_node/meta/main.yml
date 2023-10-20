@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: andrea11
+  description: Install node versions using nvm
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+    - name: macOS
+      versions:
+        - all
+  galaxy_tags:
+    - applications
+    - customization
+    - macos
+dependencies:
+  - role: install_applications
+    vars:
+      install_applications_formulae:
+        - nvm

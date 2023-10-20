@@ -1,0 +1,4 @@
+---
+setup_finicky_default_browser: Safari
+setup_finicky_redirect_http_to_https: true
+setup_finicky_setup_finicky_rules: []

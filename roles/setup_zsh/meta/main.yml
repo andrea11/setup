@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  author: andrea11
+  description:
+    It configures zsh shell. It can setup oh-my-zsh, sdkman, nvm and gpg.
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+    - name: macOS
+      versions:
+        - all
+  galaxy_tags:
+    - zsh
+    - ohmyzsh
+    - customization
+    - macos
+dependencies: []

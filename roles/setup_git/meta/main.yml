@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: andrea11
+  description:
+    It configures git. Different git accounts can be configured in different
+    workspaces. This is useful if you have multiple git accounts
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+    - name: macOS
+      versions:
+        - all
+  galaxy_tags:
+    - git
+    - workspace
+    - customization
+    - macos
+dependencies: []

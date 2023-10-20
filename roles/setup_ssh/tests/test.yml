@@ -1,0 +1,18 @@
+---
+- name: "Test setup_ssh role"
+  hosts: localhost
+  remote_user: root
+  roles:
+    - role: setup_ssh
+      setup_ssh_configurations:
+        - name: test
+          allowed_signers_path:
+            "{{ lookup('env', 'HOME') }}/.ssh/allowed_signers"
+          user_email: <name>.<surname>@<company>.com
+          signature:
+            algorithm: ed25519
+            private_key: <signature private key>
+            public_key: <signature public key>
+          authentication:
+            algorithm: ed25519
+            public_key: <signature public key>

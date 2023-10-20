@@ -1,0 +1,6 @@
+---
+- name: "Test setup_git role"
+  hosts: localhost
+  remote_user: root
+  roles:
+    - role: setup_git

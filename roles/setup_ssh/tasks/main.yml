@@ -1,0 +1,66 @@
+---
+- name: Create ssh folder if not exists
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.ssh"
+    state: directory
+    mode: u=xrw,go=
+
+- name: Generate authentication public ssh key files per each workspace
+  ansible.builtin.copy:
+    content: "{{ item.authentication.public_key }}"
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_authentication_{{
+      item.authentication.algorithm\
+      \ }}.pub"
+    mode: u=rw,go=r
+  loop: "{{ setup_ssh_configurations }}"
+
+- name: Generate signature public ssh key files per each workspace
+  ansible.builtin.copy:
+    content: "{{ item.signature.public_key }}"
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_signature_{{
+      item.signature.algorithm\
+      \ }}.pub"
+    mode: u=rw,go=r
+  loop: "{{ setup_ssh_configurations }}"
+
+- name: Generate signature private ssh key files per each workspace
+  ansible.builtin.copy:
+    content: "{{ item.signature.private_key }}"
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_signature_{{
+      item.signature.algorithm\
+      \ }}"
+    mode: u=rw,go=
+  loop: "{{ setup_ssh_configurations }}"
+
+- name: Create allowed_signers parent folders if not exist
+  ansible.builtin.file:
+    path: "{{ item | dirname }}"
+    state: directory
+    mode: u=xrw,go=
+  loop:
+    "{{ setup_ssh_configurations | map(attribute='allowed_signers_path') |
+    unique }}"
+
+- name: Add allowed_signer to allowed_signers file if needed
+  ansible.builtin.lineinfile:
+    path: "{{ item.allowed_signer_path }}"
+    line: "{{ item.user_email }} {{ item.signature.public_key }}"
+    regexp:
+      ^{{ item.user_email | ansible.builtin.regex_escape }} {{
+      item.signature.public_key | ansible.builtin.regex_escape }}$
+    state: present
+    create: true
+    mode: u=rw,go=r
+  loop: "{{ setup_ssh_configurations }}"
+
+- name: Generate ssh config files
+  ansible.builtin.template:
+    src: ssh_config.j2
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_config"
+    mode: u=rw,go=
+  loop: "{{ setup_ssh_configurations }}"
+  vars:
+    identity_file_path: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name
+      }}_authentication_{{\
+      \ item.authentication.algorithm }}.pub"
+    identity_agent: "{{ item.identity_agent }}"

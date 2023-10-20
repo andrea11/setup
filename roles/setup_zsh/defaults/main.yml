@@ -1,0 +1,8 @@
+---
+setup_zsh_aliases: []
+setup_zsh_use_oh_my_zsh: false
+setup_zsh_oh_my_zsh_plugins: []
+setup_zsh_use_sdkman: false
+setup_zsh_use_nvm: false
+setup_zsh_use_gpg: false
+setup_zsh_default_editor: code --wait

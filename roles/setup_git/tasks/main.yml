@@ -1,0 +1,31 @@
+---
+- name: Generate .gitconfig file
+  ansible.builtin.template:
+    src: gitconfig.j2
+    dest: "{{ lookup('env', 'HOME') }}/.gitconfig"
+    mode: u=rw,g=rw,o=r
+
+- name: Create workspace folder if not exists
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: u=xrw,g=xr,o=x
+  loop: "{{ setup_git_workspaces }}"
+  vars:
+    workspaces: "{{ setup_git_workspaces }}"
+    default_editor: "{{ setup_git_default_editor }}"
+
+- name: Generate .gitconfig file per each workspace
+  ansible.builtin.template:
+    src: gitconfig_workspace.j2
+    dest: "{{ item.path }}/.gitconfig"
+    mode: u=rw,g=rw,o=r
+  loop: "{{ setup_git_workspaces }}"
+  vars:
+    workspace_name: "{{ item.name }}"
+    user_name: "{{ item.user_name }}"
+    user_email: "{{ item.user_email }}"
+    ssh:
+      program: "{{ item.ssh.program }}"
+      allowed_signers_path: "{{ item.ssh.allowed_signers_path }}"
+      public_key_path: "{{ item.ssh.public_key_path }}"

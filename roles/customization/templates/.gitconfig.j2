@@ -1,7 +1,0 @@
-# This is Git's per-user configuration file.
-{% for workspace in git_workspaces %}
-[includeIf "gitdir:{{ workspace.path }}/"]
-	path = {{ workspace.path }}/.gitconfig
-{% endfor %}
-[core]
-    editor = code --wait

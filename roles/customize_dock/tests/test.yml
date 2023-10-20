@@ -1,0 +1,19 @@
+---
+- name: "Test customize_dock role"
+  hosts: localhost
+  remote_user: root
+  roles:
+    - role: customize_dock
+      customize_dock_dock_items:
+        - name: Launchpad
+          path: /System/Applications/Launchpad.app
+          position: 1
+        - name: Safari
+          path: /System/Cryptexes/App/System/Applications/Safari.app
+          position: 2
+        - name: App Store
+          path: /Applications/App Store.app
+          position: 3
+        - name: System Settings
+          path: /System/Applications/System Settings.app
+          position: 4

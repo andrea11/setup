@@ -1,0 +1,10 @@
+---
+- name: "Test setup_java role"
+  hosts: localhost
+  remote_user: root
+  roles:
+    - role: setup_java
+      setup_java_certificate_websites:
+        - url: "https://www.google.com"
+          alias: "google"
+          port: 443

@@ -1,0 +1,4 @@
+---
+setup_java_java_major_versions:
+  - 17
+setup_java_certificate_websites: []

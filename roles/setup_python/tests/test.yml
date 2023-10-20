@@ -1,0 +1,6 @@
+---
+- name: "Test setup_python role"
+  hosts: localhost
+  remote_user: root
+  roles:
+    - role: setup_python

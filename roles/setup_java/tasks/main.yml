@@ -1,0 +1,56 @@
+---
+- name: Get all versions available on sdkman
+  ansible.builtin.shell:
+    source "$(brew --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk list
+    java
+  register: sdk_list_java
+  args:
+    executable: /bin/zsh
+  changed_when: false
+  failed_when: sdk_list_java.rc != 0
+
+- name: Get all versions matching majors ones
+  ansible.builtin.set_fact:
+    java_versions: "{{ java_versions | default([]) | union([sdk_list_java.stdout
+      |\
+      \ regex_search(item ~ '\\.\\d+?\\.\\d+?\\-.+') | trim]) }}"
+  loop: "{{ setup_java_java_major_versions }}"
+
+- name: Install java versions via sdkman
+  ansible.builtin.shell:
+    source "$(brew --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk
+    install java {{ item }}
+  register: sdk_install_latest_java
+  args:
+    executable: /bin/zsh
+  changed_when: not sdk_install_latest_java.stdout.find("is already installed")
+  failed_when: sdk_install_latest_java.rc != 0
+  loop: "{{ java_versions }}"
+
+- name: Get all candidates' java home from sdkman
+  ansible.builtin.shell:
+    source "$(brew --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk home
+    java {{ item }}
+  register: candidates_java_home
+  changed_when: false
+  failed_when: candidates_java_home.rc != 0
+  loop: "{{ java_versions }}"
+
+- name: Get all JAVA_HOME
+  ansible.builtin.set_fact:
+    java_homes_new: "{{ java_homes_new | default([]) | union([item |
+      regex_search('/.+')])\
+      \ }}"
+  loop: "{{ candidates_java_home.results | map(attribute='stdout') }}"
+  changed_when: false
+
+- name: Import SSL certificate from websites
+  community.general.java_cert:
+    cert_url: "{{ item.0.url }}"
+    cert_port: "{{ item.0.port }}"
+    cert_alias: "{{ item.0.alias }}"
+    keystore_path: "{{ item.1 }}/lib/security/cacerts"
+    keystore_pass: changeit
+    keystore_create: true
+    state: present
+  loop: "{{ setup_java_certificate_websites | product(java_homes_new) | list }}"

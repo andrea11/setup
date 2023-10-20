@@ -1,0 +1,57 @@
+---
+- name: Add aliases
+  ansible.builtin.lineinfile:
+    dest: "{{ lookup('env', 'HOME') }}/.aliases"
+    create: true
+    mode: u=rw,g=r,o=r
+    line: alias {{ item.alias }}="{{ item.command }}"
+    regexp: ^alias {{ item.alias }}=
+  loop: "{{ setup_zsh_aliases }}"
+
+- name: Set up .zshrc
+  ansible.builtin.template:
+    src: zshrc.j2
+    dest: "{{ lookup('env', 'HOME') }}/.zshrc"
+    mode: u=rw,g=r,o=r
+  vars:
+    use_oh_my_zsh: "{{ setup_zsh_use_oh_my_zsh }}"
+    oh_my_zsh_plugins: "{{ setup_zsh_oh_my_zsh_plugins }}"
+    use_sdkman: "{{ setup_zsh_use_sdkman }}"
+    use_nvm: "{{ setup_zsh_use_nvm }}"
+    use_pyenv: "{{ setup_zsh_use_pyenv }}"
+    use_pyenv_virtualenv: "{{ setup_zsh_use_pyenv_virtualenv }}"
+    default_editor: "{{ setup_zsh_default_editor }}"
+    use_gpg: "{{ setup_zsh_use_gpg }}"
+
+- name: Create .zsh folder if it does not exist
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.zsh"
+    state: directory
+    mode: u=xrw,g=xr,o=x
+
+- name: Check if .zsh folder is a git repo
+  ansible.builtin.stat:
+    path: "{{ lookup('env', 'HOME') }}/.zsh/.git"
+  register: zsh_git
+
+- name: Setup ohmyzsh git remote, if .zsh is not initialized
+  # noqa command-instead-of-module
+  ansible.builtin.command:
+    git clone --no-checkout https://github.com/ohmyzsh/ohmyzsh .
+  args:
+    chdir: "{{ lookup('env', 'HOME') }}/.zsh"
+    creates: "{{ lookup('env', 'HOME') }}/.zsh/.git"
+
+- name: Limit the clone to ohmyzsh plugins only, if they are not installed
+  # noqa command-instead-of-module
+  ansible.builtin.command: git sparse-checkout set --no-cone /plugins /lib
+  args:
+    chdir: "{{ lookup('env', 'HOME') }}/.zsh"
+    creates: "{{ lookup('env', 'HOME') }}/.zsh/.git/info/sparse-checkout"
+
+- name: Checkout ohmyzsh plugins
+  # noqa command-instead-of-module
+  ansible.builtin.command: git checkout
+  args:
+    chdir: "{{ lookup('env', 'HOME') }}/.zsh"
+    creates: "{{ lookup('env', 'HOME') }}/.zsh/plugins"
