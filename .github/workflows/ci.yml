@@ -35,12 +35,12 @@ jobs:
           ls -la ./.github/actions/
           ls -la ./.github/actions/setup-environment.yml
           echo $PWD
-  #     - uses: ./.github/actions/setup-environment
-  #     - name: Test the playbook.
-  #       run:
-  #         ansible-playbook --inventory ./localhost roles/customize_dock/test.yml
-  #       env:
-  #         ANSIBLE_FORCE_COLOR: "1"
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost roles/customize_dock/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
   # setup_git_test:
   #   name: Role setup_git test
   #   runs-on: macos-latest
