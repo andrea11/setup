@@ -16,9 +16,12 @@ repos:
     hooks:
       - id: yamllint
         args: [--format, parsable, --strict]
-        exclude: ^.github/
+        files: "(^roles/.*|galaxy|main|requirements|runtime)\\.yml$"
+        exclude: (^.github/|^.pre-commit-config\\.yaml$)
   - repo: https://github.com/ansible-community/ansible-lint.git
     # https://github.com/ansible-community/ansible-lint/releases/
     rev: v6.21.1
     hooks:
       - id: ansible-lint
+        always_run: false
+        files: "(^roles/.*|galaxy|main|requirements|runtime)\\.yml$"
