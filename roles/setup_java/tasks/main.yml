@@ -1,4 +1,26 @@
 ---
+- name: Ls sdkman-cli brew
+  ansible.builtin.command: "ls $(brew --prefix sdkman-cli)"
+  changed_when: false
+  register: sdkman_cli_brew
+
+- name: Ls sdkman-cli brew
+  ansible.builtin.command: "ls $(brew --prefix sdkman-cli)/libexec/"
+  changed_when: false
+  register: sdkman_cli_brew_libexec
+
+- name: Ls sdkman-cli brew
+  ansible.builtin.command: "ls $(brew --prefix sdkman-cli)/libexec/bin/"
+  changed_when: false
+  register: sdkman_cli_brew_bin
+
+- name: Debugging
+  ansible.builtin.debug:
+    msg:
+      - "{{ sdkman_cli_brew.stdout_lines }}"
+      - "{{ sdkman_cli_brew_libexec.stdout_lines }}"
+      - "{{ sdkman_cli_brew_bin.stdout_lines }}"
+
 - name: Get all versions available on sdkman
   ansible.builtin.shell:
     source "$(brew --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk list
