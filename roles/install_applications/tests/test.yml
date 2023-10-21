@@ -9,4 +9,5 @@
       install_applications_casks:
         - visual-studio-code
       install_applications_taps:
+        - homebrew/cask-fonts
         - sdkman/tap

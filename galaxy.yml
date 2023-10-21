@@ -64,4 +64,10 @@ repository: https://github.com/andrea11/setup
 # This uses 'fnmatch' to match the files or directories.
 # Some directories and files like 'galaxy.yml', '*.pyc', '*.retry',
 # and '.git' are always filtered. Mutually exclusive with 'manifest'
-build_ignore: [.github, venv]
+build_ignore:
+  - .github
+  - .gitignore
+  - .pre-commit-config.yaml
+  - ansible_collections
+  - roles/*/tests
+  - venv

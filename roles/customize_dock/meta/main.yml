@@ -1,4 +1,5 @@
 ---
+allow_duplicates: true
 galaxy_info:
   author: andrea11
   description: Customize the dock with your favorite applications
@@ -16,6 +17,7 @@ galaxy_info:
     - dock
     - macos
     - customization
+
 dependencies:
   - role: andrea11.macos_setup.install_applications
     vars:
