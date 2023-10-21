@@ -4,7 +4,3 @@
   remote_user: root
   roles:
     - role: andrea11.macos_setup.setup_java
-      setup_java_certificate_websites:
-        - url: "https://github.com"
-          alias: "github"
-          port: 443
