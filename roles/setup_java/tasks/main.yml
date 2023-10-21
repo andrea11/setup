@@ -21,26 +21,13 @@
       - "{{ sdkman_cli_brew_libexec.stdout_lines }}"
       - "{{ sdkman_cli_brew_bin.stdout_lines }}"
 
-- name: Testing source
-  ansible.builtin.shell:
-    source "$(brew --prefix sdkman-cli)/libexec/bin/sdkman-init.sh"
-  args:
-    executable: /bin/zsh
-  changed_when: false
-
-- name: Testing sdk
-  ansible.builtin.shell: sdk list java
-  args:
-    executable: /bin/zsh
-  changed_when: false
-
 - name: Get all versions available on sdkman
   ansible.builtin.shell:
     source "$(brew --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk list
     java
   register: sdk_list_java
   args:
-    executable: /bin/zsh
+    executable: /bin/bash
   changed_when: false
   failed_when: sdk_list_java.rc != 0
 
@@ -57,7 +44,7 @@
     install java {{ item }}
   register: sdk_install_latest_java
   args:
-    executable: /bin/zsh
+    executable: /bin/bash
   changed_when: not sdk_install_latest_java.stdout.find("is already installed")
   failed_when: sdk_install_latest_java.rc != 0
   loop: "{{ java_versions }}"
