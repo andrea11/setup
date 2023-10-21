@@ -1,30 +1,8 @@
 ---
-- name: Ls sdkman-cli brew
-  ansible.builtin.shell: "ls $(brew --prefix sdkman-cli)"
-  changed_when: false
-  register: sdkman_cli_brew
-
-- name: Ls sdkman-cli brew
-  ansible.builtin.shell: "ls $(brew --prefix sdkman-cli)/libexec/"
-  changed_when: false
-  register: sdkman_cli_brew_libexec
-
-- name: Ls sdkman-cli brew
-  ansible.builtin.shell: "ls $(brew --prefix sdkman-cli)/libexec/bin/"
-  changed_when: false
-  register: sdkman_cli_brew_bin
-
-- name: Debugging
-  ansible.builtin.debug:
-    msg:
-      - "{{ sdkman_cli_brew.stdout_lines }}"
-      - "{{ sdkman_cli_brew_libexec.stdout_lines }}"
-      - "{{ sdkman_cli_brew_bin.stdout_lines }}"
-
 - name: Get all versions available on sdkman
   ansible.builtin.shell:
-    source "$(brew --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk list
-    java
+    export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec && source "$(brew
+    --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk list java
   register: sdk_list_java
   args:
     executable: /bin/bash
@@ -40,8 +18,9 @@
 
 - name: Install java versions via sdkman
   ansible.builtin.shell:
-    source "$(brew --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk
-    install java {{ item }}
+    export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec && source "$(brew
+    --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk install java {{ item
+    }}
   register: sdk_install_latest_java
   args:
     executable: /bin/bash
@@ -51,8 +30,8 @@
 
 - name: Get all candidates' java home from sdkman
   ansible.builtin.shell:
-    source "$(brew --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk home
-    java {{ item }}
+    export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec && source "$(brew
+    --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && sdk home java {{ item }}
   register: candidates_java_home
   changed_when: false
   failed_when: candidates_java_home.rc != 0
