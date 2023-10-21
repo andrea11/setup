@@ -6,4 +6,5 @@ setup_zsh_use_sdkman: false
 setup_zsh_use_nvm: false
 setup_zsh_use_gpg: false
 setup_zsh_use_pyenv: false
+setup_zsh_use_pyenv_virtualenv: false
 setup_zsh_default_editor: code --wait

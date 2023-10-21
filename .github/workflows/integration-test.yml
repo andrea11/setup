@@ -1,0 +1,30 @@
+---
+name: Integration tests
+on:
+  schedule:
+    - cron: 0 0 15 * *
+
+jobs:
+  integration-test:
+    name: Integration test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - macos-13
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v3
+      - uses: .github/actions/setup
+      - name: Test the playbook.
+        run: ansible-playbook --inventory localhost test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+      - name: Idempotence check.
+        run: |
+          idempotence=$(mktemp)
+          ansible-playbook --inventory localhost test.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
