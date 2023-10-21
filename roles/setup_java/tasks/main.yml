@@ -1,16 +1,16 @@
 ---
 - name: Ls sdkman-cli brew
-  ansible.builtin.command: "ls $(brew --prefix sdkman-cli)"
+  ansible.builtin.shell: "ls $(brew --prefix sdkman-cli)"
   changed_when: false
   register: sdkman_cli_brew
 
 - name: Ls sdkman-cli brew
-  ansible.builtin.command: "ls $(brew --prefix sdkman-cli)/libexec/"
+  ansible.builtin.shell: "ls $(brew --prefix sdkman-cli)/libexec/"
   changed_when: false
   register: sdkman_cli_brew_libexec
 
 - name: Ls sdkman-cli brew
-  ansible.builtin.command: "ls $(brew --prefix sdkman-cli)/libexec/bin/"
+  ansible.builtin.shell: "ls $(brew --prefix sdkman-cli)/libexec/bin/"
   changed_when: false
   register: sdkman_cli_brew_bin
 
