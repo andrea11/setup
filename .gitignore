@@ -2,8 +2,6 @@
 ansible_collections/
 .ansible/
 ansible.log
-ansible.cfg
-ansible.ini
 *.retry
 .vault_pass
 
