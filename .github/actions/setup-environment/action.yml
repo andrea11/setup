@@ -8,7 +8,3 @@ runs:
     - name: Install python dependencies
       shell: bash
       run: pip3 install ansible
-    - name: Install ansible collections.
-      shell: bash
-      run: |
-        ansible-galaxy install -r requirements.yml

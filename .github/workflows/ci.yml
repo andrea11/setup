@@ -12,10 +12,9 @@ jobs:
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v3
-      - name: Set up Python 3
-        uses: actions/setup-python@v3
+      - uses: ./.github/actions/setup-environment
       - name: Install python test dependencies
-        run: pip3 install yamllint ansible ansible-lint
+        run: pip3 install yamllint ansible-lint
       - name: Install ansible collections.
         run: |
           ansible-galaxy install -r requirements.yml
@@ -33,8 +32,7 @@ jobs:
       - name: Test the playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          playbook: test.yml
-          directory: roles/customize_dock/tests/
+          playbook: roles/customize_dock/tests/test.yml
           requirements: requirements.yml
           options: |
             --inventory localhost
@@ -45,12 +43,13 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost
-          roles/customize_defaults/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/customize_defaults/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   setup_git_test:
     name: Role setup_git test
     runs-on: macos-latest
@@ -58,11 +57,13 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost roles/setup_git/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/setup_git/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   setup_ssh_test:
     name: Role setup_ssh test
     runs-on: macos-latest
@@ -70,11 +71,13 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost roles/setup_ssh/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/setup_ssh/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   install_applications_test:
     name: Role install_applications test
     runs-on: macos-latest
@@ -93,12 +96,13 @@ jobs:
           sudo rm -rf /usr/local/bin/chromedriver
           sudo rm -rf /Applications/Firefox.app
           sudo rm -rf /usr/local/bin/firefox
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost
-          roles/install_applications/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/install_applications/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   setup_java_test:
     name: Role setup_java test
     runs-on: macos-latest
@@ -106,11 +110,13 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost roles/setup_java/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/setup_java/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   setup_zsh_test:
     name: Role setup_zsh test
     runs-on: macos-latest
@@ -118,11 +124,13 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost roles/setup_zsh/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/setup_zsh/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   launch_applications_first_time_test:
     name: Role launch_applications_first_time test
     runs-on: macos-latest
@@ -130,12 +138,13 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost
-          roles/launch_applications_first_time/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/launch_applications_first_time/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   setup_node_test:
     name: Role setup_node test
     runs-on: macos-latest
@@ -143,11 +152,13 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost roles/setup_node/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/setup_node/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   setup_finicky_test:
     name: Role setup_finicky test
     runs-on: macos-latest
@@ -155,12 +166,13 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost
-          roles/setup_finicky/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/setup_finicky/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   setup_python_test:
     name: Role setup_python test
     runs-on: macos-latest
@@ -168,9 +180,10 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost
-          roles/setup_python/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: roles/setup_python/tests/test.yml
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
