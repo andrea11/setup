@@ -1,7 +1,6 @@
 ---
 - name: Set macOS defaults
   become: true
-  become_user: "{{ lookup('env', 'USER') }}"
   community.general.osx_defaults:
     domain: "{{ item.domain }}"
     key: "{{ item.key }}"

@@ -13,7 +13,6 @@
 
 - name: Install Homebrew
   become: true
-  become_user: "{{ lookup('env', 'USER') }}"
   ansible.builtin.script: /tmp/homebrew.sh
   args:
     creates: /usr/local/bin/brew

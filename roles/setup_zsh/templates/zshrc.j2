@@ -1,47 +1,90 @@
-# Load oh-my-zsh plugin manager
-{%- if use_oh_my_zsh -%}
-    autoload -U +X compinit && compinit
+{%- set homebrew_load -%}
+	{%- if is_apple_silicon %}
+		# Load homebrew
+		export PATH="$PATH:/opt/homebrew/bin"
+	{% endif %}
+{%- endset -%}
 
-    # Load plugins
-    source $HOME/.zsh/lib/git.zsh
-    {%- for plugin in oh_my_zsh_plugins -%}
-        source $HOME/.zsh/plugins/{{plugin}}/{{plugin}}.plugin.zsh
-    {% endfor %}
-{% endif %}
+{%- set oh_my_zsh_load -%}
+	{%- if use_oh_my_zsh %}
+		# Load oh-my-zsh plugin manager
+		autoload -U +X compinit && compinit
+		source $HOME/.zsh/lib/git.zsh
 
+			# Load oh-my-zsh plugins
+		{%- for plugin in oh_my_zsh_plugins %}
+			source $HOME/.zsh/plugins/{{plugin}}/{{plugin}}.plugin.zsh
+		{%- endfor %}
+	{% endif %}
+{% endset -%}
+
+{%- set aliases_load -%}
 # Load aliases
 source $HOME/.aliases
+{% endset -%}
 
-# Load sdkman
-{%- if use_sdkman -%}
-    export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec
-    [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
-{% endif %}
+{%- set sdkman_load -%}
+	{% if use_sdkman %}
+		# Load sdkman
+		export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec
+		[[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+	{% endif %}
+{%- endset -%}
 
-# Load nvm
-{%- if use_nvm -%}
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && source "$(brew --prefix)/opt/nvm/nvm.sh"
-{% endif %}
+{%- set nvm_load -%}
+	{%- if use_nvm %}
+		# Load nvm
+		export NVM_DIR="$HOME/.nvm"
+		[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && source "$(brew --prefix)/opt/nvm/nvm.sh"
+	{% endif %}
+{%- endset -%}
 
-# Load pyenv
-{%- if use_pyenv -%}
-    alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-{% endif %}
+{%- set pyenv_load -%}
+	{%- if use_pyenv %}
+		# Load pyenv
+		alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+		export PYENV_ROOT="$HOME/.pyenv"
+		export PATH="$PYENV_ROOT/bin:$PATH"
+		eval "$(pyenv init -)"
+		eval "$(pyenv virtualenv-init -)"
+	{% endif %}
+{%- endset -%}
 
-{%- if use_pyenv_virtualenv -%}
-    # Load pyenv-virtualenv
-    if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-{% endif %}
+{%- set pyenv_virtualenv_load -%}
+	{%- if use_pyenv_virtualenv %}
+		# Load pyenv-virtualenv
+		if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+	{% endif %}
+{%- endset -%}
 
-# Set VS Code as default editor
-export EDITOR="{{ default_editor }}"
+{%- set default_editor_load -%}
+	{%- if default_editor %}
+		# Set VS Code as default editor
+		export EDITOR="{{ default_editor }}"
+	{% endif %}
+{%- endset -%}
 
-# Fix for GPG
-{%- if use_gpg -%}
-    export GPG_TTY=$(tty)
-{% endif %}
+{%- set gpg_load -%}
+	{%- if use_gpg %}
+		# Fix for GPG
+		export GPG_TTY=$(tty)
+	{% endif %}
+{%- endset -%}
+
+{{- homebrew_load | replace("\t", "") -}}
+
+{{ oh_my_zsh_load | replace("\t", "") -}}
+
+{{ aliases_load | replace("\t", "") -}}
+
+{{ sdkman_load | replace("\t", "") -}}
+
+{{ nvm_load | replace("\t", "") -}}
+
+{{ pyenv_load | replace("\t", "") -}}
+
+{{ pyenv_virtualenv_load | replace("\t", "") -}}
+
+{{ default_editor_load | replace("\t", "") -}}
+
+{{ gpg_load | replace("\t", "") -}}

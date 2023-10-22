@@ -1,4 +1,9 @@
 ---
+- name: Set is_apple_silicon variable
+  ansible.builtin.set_fact:
+    is_arm_processor:
+      "{{ ansible_processor | regex_search('arm', ignorecase=true) == 'arm' }}"
+
 - name: Add aliases
   ansible.builtin.lineinfile:
     dest: "{{ lookup('env', 'HOME') }}/.aliases"
@@ -13,6 +18,8 @@
     src: zshrc.j2
     dest: "{{ lookup('env', 'HOME') }}/.zshrc"
     mode: u=rw,g=r,o=r
+    lstrip_blocks: false
+    trim_blocks: false
   vars:
     use_oh_my_zsh: "{{ setup_zsh_use_oh_my_zsh }}"
     oh_my_zsh_plugins: "{{ setup_zsh_oh_my_zsh_plugins }}"
@@ -22,6 +29,7 @@
     use_pyenv_virtualenv: "{{ setup_zsh_use_pyenv_virtualenv }}"
     default_editor: "{{ setup_zsh_default_editor }}"
     use_gpg: "{{ setup_zsh_use_gpg }}"
+    is_apple_silicon: "{{ is_arm_processor }}"
 
 - name: Create .zsh folder if it does not exist
   ansible.builtin.file:
