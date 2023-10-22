@@ -14,7 +14,8 @@
 - name: Install Homebrew
   become: true
   ansible.builtin.shell:
-    "{{ lookup('ansible.builtin.file', '/tmp/homebrew.sh') }} < /dev/null"
+    /bin/bash -c {{ lookup('ansible.builtin.file', '/tmp/homebrew.sh') }} <
+    /dev/null
   args:
     creates: /usr/local/bin/brew
   when: not brew_installed.stat.exists
