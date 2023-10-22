@@ -61,17 +61,6 @@
       install_applications_taps:
         - homebrew/cask-fonts
         - sdkman/tap
-    - role: launch_applications_first_time
-    - role: setup_java
-      setup_java_java_major_versions:
-        - 11
-        - 17
-      setup_java_certificate_websites:
-        - url: artifactory.intra.nexthink.com
-          port: 443
-          alias: Nexthink Artifactory
-    - role: setup_node
-    - role: setup_python
     - role: setup_finicky
       setup_finicky_rules:
         - match: [/nexthink/]
@@ -85,6 +74,16 @@
           browser: Google Chrome
         - match: () => finicky.getKeys().function
           browser: Google Chrome
+    - role: setup_java
+      setup_java_java_major_versions:
+        - 11
+        - 17
+      setup_java_certificate_websites:
+        - url: artifactory.intra.nexthink.com
+          port: 443
+          alias: Nexthink Artifactory
+    - role: setup_node
+    - role: setup_python
     - role: setup_zsh
       setup_zsh_aliases:
         - alias: cd
@@ -444,6 +443,7 @@
           #   type: array
           #   state: present
           #   array_add: true
+    - role: launch_applications_first_time
   post_tasks:
     - name: Reboot MacOs
       ansible.builtin.reboot:
