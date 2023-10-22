@@ -4,18 +4,11 @@
     path: /usr/local/bin/brew
   register: brew_installed
 
-- name: Download Homebrew
-  ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-    dest: /tmp/homebrew.sh
-    mode: u=rwx,g=rx,o=r
-  when: not brew_installed.stat.exists
-
 - name: Install Homebrew
   become: true
   ansible.builtin.shell:
-    /bin/bash -c {{ lookup('ansible.builtin.file', '/tmp/homebrew.sh') }} <
-    /dev/null
+    /bin/bash -c "$(curl -fsSL
+    https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   args:
     creates: /usr/local/bin/brew
   when: not brew_installed.stat.exists
