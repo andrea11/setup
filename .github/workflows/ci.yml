@@ -30,12 +30,14 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup-environment
-      - name: Test the playbook.
-        run:
-          ansible-playbook --inventory localhost
-          roles/customize_dock/tests/test.yml
-        env:
-          ANSIBLE_FORCE_COLOR: "1"
+      - name: Test the playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: test.yml
+          directory: roles/customize_dock/tests/
+          requirements: requirements.yml
+          options: |
+            --inventory localhost
   customize_defaults_test:
     name: Role customize_defaults test
     runs-on: macos-latest
