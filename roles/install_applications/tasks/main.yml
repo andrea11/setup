@@ -5,7 +5,6 @@
   register: brew_installed
 
 - name: Install Homebrew
-  become: true
   ansible.builtin.shell:
     /bin/bash -c "$(curl -fsSL
     https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" <
