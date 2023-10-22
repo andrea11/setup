@@ -36,6 +36,19 @@ jobs:
           roles/customize_dock/tests/test.yml
         env:
           ANSIBLE_FORCE_COLOR: "1"
+  customize_defaults_test:
+    name: Role customize_defaults test
+    runs-on: macos-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-environment
+      - name: Test the playbook.
+        run:
+          ansible-playbook --inventory localhost
+          roles/customize_defaults/tests/test.yml
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
   setup_git_test:
     name: Role setup_git test
     runs-on: macos-latest
