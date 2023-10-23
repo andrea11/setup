@@ -1,6 +1,8 @@
 ---
 - name: Set macOS defaults
   become: true
+  vars:
+    ansible_become_pass: "{{ sudo_password }}"
   community.general.osx_defaults:
     domain: "{{ item.domain }}"
     key: "{{ item.key }}"

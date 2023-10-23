@@ -1,8 +1,8 @@
 ---
-- name: Set is_apple_silicon variable
+- name: Set is_arm_processor variable
   ansible.builtin.set_fact:
     is_arm_processor:
-      "{{ ansible_processor | regex_search('arm', ignorecase=true) == 'arm' }}"
+      "{{ ansible_processor | regex_search('Apple') == 'Apple' }}"
 
 - name: Add aliases
   ansible.builtin.lineinfile:
@@ -10,7 +10,6 @@
     create: true
     mode: u=rw,g=r,o=r
     line: alias {{ item.alias }}="{{ item.command }}"
-    regexp: ^alias {{ item.alias }}=
   loop: "{{ setup_zsh_aliases }}"
 
 - name: Set up .zshrc

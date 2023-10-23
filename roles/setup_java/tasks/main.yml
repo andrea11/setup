@@ -1,11 +1,13 @@
 ---
+- name: Set terminal_init variable
+  ansible.builtin.set_fact:
+    terminal_init: "source {{ lookup('env', 'HOME') }}/.zshrc"
+
 - name: Get all versions available on sdkman
-  ansible.builtin.shell:
-    export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec && \ source "$(brew
-    --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && \ sdk list java
+  ansible.builtin.shell: "{{ terminal_init }} && sdk list java"
   register: sdk_list_java
   args:
-    executable: /bin/bash
+    executable: /bin/zsh
   changed_when: false
   failed_when: sdk_list_java.rc != 0
 
@@ -17,22 +19,20 @@
   loop: "{{ setup_java_java_major_versions }}"
 
 - name: Install java versions via sdkman
-  ansible.builtin.shell:
-    export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec && \ source "$(brew
-    --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && \ sdk install java {{
-    item }}
+  ansible.builtin.shell: "{{ terminal_init }} && sdk install java {{
+    item }}"
   register: sdk_install_latest_java
   args:
-    executable: /bin/bash
+    executable: /bin/zsh
   changed_when: not sdk_install_latest_java.stdout.find("is already installed")
   failed_when: sdk_install_latest_java.rc != 0
   loop: "{{ java_versions }}"
 
 - name: Get all candidates' java home from sdkman
   ansible.builtin.shell:
-    export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec && \ source "$(brew
-    --prefix sdkman-cli)/libexec/bin/sdkman-init.sh" && \ sdk home java {{ item
-    }}
+    "{{ terminal_init }} && sdk home java {{ item }}"
+  args:
+    executable: /bin/zsh
   register: candidates_java_home
   changed_when: false
   failed_when: candidates_java_home.rc != 0
@@ -54,5 +54,6 @@
     keystore_path: "{{ item.1 }}/lib/security/cacerts"
     keystore_pass: changeit
     keystore_create: true
+    executable: "{{ item.1 }}/bin/keytool"
     state: present
   loop: "{{ setup_java_certificate_websites | product(java_homes_new) | list }}"

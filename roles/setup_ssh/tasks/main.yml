@@ -9,8 +9,7 @@
   ansible.builtin.copy:
     content: "{{ item.authentication.public_key }}"
     dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_authentication_{{
-      item.authentication.algorithm\
-      \ }}.pub"
+      item.authentication.algorithm }}.pub"
     mode: u=rw,go=r
   loop: "{{ setup_ssh_configurations }}"
 
@@ -31,6 +30,7 @@
       \ }}"
     mode: u=rw,go=
   loop: "{{ setup_ssh_configurations }}"
+  when: item.signature.private_key is defined
 
 - name: Create allowed_signers parent folders if not exist
   ansible.builtin.file:

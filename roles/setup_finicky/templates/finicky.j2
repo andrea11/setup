@@ -3,7 +3,7 @@ module.exports = {
   {% if redirect_http_to_https %}
   rewrite: [
     {
-      # Redirect all urls to use https
+      // Redirect all urls to use https
       match: ({ url }) => url.protocol === "http",
       url: { protocol: "https" },
     },

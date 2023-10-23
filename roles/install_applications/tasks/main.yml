@@ -1,32 +1,35 @@
 ---
 - name: Check if brew is installed
-  ansible.builtin.stat:
-    path: /usr/local/bin/brew
+  community.general.homebrew:
+    update_homebrew: true
+    check_mode: true
+  failed_when: false
   register: brew_installed
 
 - name: Install Homebrew
   ansible.builtin.shell:
     /bin/bash -c "$(curl -fsSL
-    https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" <
+    https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" <
     /dev/null
   args:
     creates: /usr/local/bin/brew
-  when: not brew_installed.stat.exists
+  when: brew_installed is failed
 
 - name: Install taps
   community.general.homebrew_tap:
-    name: "{{ install_applications_taps }}"
+    name: "{{ item }}"
     state: present
-  when: install_applications_taps | length > 0
+  loop: "{{ install_applications_taps }}"
 
 - name: Install packages via formulae
   community.general.homebrew:
-    name: "{{ install_applications_formulae }}"
+    name: "{{ item }}"
     state: present
-  when: install_applications_formulae | length > 0
+  loop: "{{ install_applications_formulae }}"
 
 - name: Install packages from cask
   community.general.homebrew_cask:
-    name: "{{ install_applications_casks }}"
+    name: "{{ item }}"
     state: present
-  when: install_applications_casks | length > 0
+    sudo_password: "{{ sudo_password }}"
+  loop: "{{ install_applications_casks }}"

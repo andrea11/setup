@@ -1,6 +1,11 @@
 ---
 - name: Setup laptop environment
   hosts: localhost
+  vars_prompt:
+    - name: sudo_password
+      prompt: What is your password?
+      unsafe: true
+      private: true
   vars:
     home: "{{ lookup('env', 'HOME') }}"
     github:
@@ -44,12 +49,11 @@
         - 1password
         - 1password-cli
         - aws-vault
-        - chromedriver
         - finicky
         - firefox
         - font-fira-code
+        - google-chrome
         - hpedrorodrigues/tools/dockutil
-        - hush
         - intellij-idea
         - microsoft-edge
         - orbstack
@@ -74,16 +78,6 @@
           browser: Google Chrome
         - match: () => finicky.getKeys().function
           browser: Google Chrome
-    - role: setup_java
-      setup_java_java_major_versions:
-        - 11
-        - 17
-      setup_java_certificate_websites:
-        - url: artifactory.intra.nexthink.com
-          port: 443
-          alias: Nexthink Artifactory
-    - role: setup_node
-    - role: setup_python
     - role: setup_zsh
       setup_zsh_aliases:
         - alias: cd
@@ -181,6 +175,7 @@
             "{{ home }}/Library/Group
             Containers/2BUA8C4S2C.com.1password/t/agent.sock"
           signature:
+            algorithm: ed25519
             public_key: !vault |
               $ANSIBLE_VAULT;1.1;AES256
               36636630326633346335373361626232313866666535643239653562393961316436326132643530
@@ -193,6 +188,7 @@
               36346566303333346366326134323737333166363737346464333438656132316361613365306530
               3636
           authentication:
+            algorithm: ed25519
             public_key: !vault |
               $ANSIBLE_VAULT;1.1;AES256
               64386632666437343035613663316538316233353962636336636430303432346335383665653133
@@ -222,6 +218,16 @@
             public_key_path:
               "{{ home }}/.ssh/github_personal_signature_ed25519.pub"
             allowed_signers_path: "{{ home }}/.ssh/allowed_signers"
+    - role: setup_java
+      setup_java_java_major_versions:
+        - 11
+        - 17
+      setup_java_certificate_websites:
+        - url: artifactory.intra.nexthink.com
+          port: 443
+          alias: Nexthink Artifactory
+    - role: setup_node
+    - role: setup_python
     - role: customize_dock
       customize_dock_dock_items:
         - name: Launchpad

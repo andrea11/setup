@@ -26,6 +26,8 @@
     user_name: "{{ item.user_name }}"
     user_email: "{{ item.user_email }}"
     ssh:
-      program: "{{ item.ssh.program }}"
+      program: "{{ item.ssh.program | default(omit) }}"
       allowed_signers_path: "{{ item.ssh.allowed_signers_path }}"
       public_key_path: "{{ item.ssh.public_key_path }}"
+  tags:
+    - check
