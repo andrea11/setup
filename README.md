@@ -33,7 +33,7 @@ This project is an ansible collection, so every time you change something in the
 Then you can run the playbook with:
 
 ```bash
-  ansible-playbook --inventory ./localhost <playbook> --ask-become-pass
+  ansible-playbook --inventory ./localhost <playbook>
 ```
 
 ### Vault
@@ -61,7 +61,7 @@ secret: !vault |
 When you run the playbook, you need to pass the vault password file:
 
 ```bash
-  ansible-playbook --inventory ./localhost <playbook> --ask-become-pass --vault-password-file .vault_pass
+  ansible-playbook --inventory ./localhost <playbook> --vault-password-file .vault_pass
 ```
 
 ### Prerequisites
@@ -76,7 +76,7 @@ The following software is required to be installed on your system:
 ```bash
   python3 -m pip install --user ansible # Install ansible
   ansible-galaxy install -r requirements.yml # Install roles
-  ansible-playbook --inventory ./localhost main.yml --ask-become-pass # Run playbook
+  ansible-playbook --inventory ./localhost main.yml --vault-password-file .vault_pass # Run playbook
 ```
 
 ## Roadmap
