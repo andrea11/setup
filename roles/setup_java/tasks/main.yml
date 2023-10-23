@@ -22,7 +22,7 @@
   loop: "{{ setup_java_java_major_versions }}"
 
 - name: Install java versions via sdkman
-  ansible.builtin.shell: "{{ terminal_init }} && sdk install java {{ item }}"
+  ansible.builtin.shell: "{{ sdkman_init }} && sdk install java {{ item }}"
   register: sdk_install_latest_java
   args:
     executable: /bin/zsh
@@ -31,7 +31,7 @@
   loop: "{{ java_versions }}"
 
 - name: Get all candidates' java home from sdkman
-  ansible.builtin.shell: "{{ terminal_init }} && sdk home java {{ item }}"
+  ansible.builtin.shell: "{{ sdkman_init }} && sdk home java {{ item }}"
   args:
     executable: /bin/zsh
   register: candidates_java_home
