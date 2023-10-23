@@ -1,10 +1,13 @@
 ---
-- name: Set terminal_init variable
+- name: Set sdkman_init variable
   ansible.builtin.set_fact:
-    terminal_init: "source {{ lookup('env', 'HOME') }}/.zshrc"
+    sdkman_init:
+      export PATH="$PATH:/usr/local/bin:/opt/homebrew/bin" && export
+      SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec && source
+      "${SDKMAN_DIR}/bin/sdkman-init.sh"
 
 - name: Get all versions available on sdkman
-  ansible.builtin.shell: "{{ terminal_init }} && sdk list java"
+  ansible.builtin.shell: "{{ sdkman_init }} && sdk list java"
   register: sdk_list_java
   args:
     executable: /bin/zsh
@@ -19,8 +22,7 @@
   loop: "{{ setup_java_java_major_versions }}"
 
 - name: Install java versions via sdkman
-  ansible.builtin.shell: "{{ terminal_init }} && sdk install java {{
-    item }}"
+  ansible.builtin.shell: "{{ terminal_init }} && sdk install java {{ item }}"
   register: sdk_install_latest_java
   args:
     executable: /bin/zsh
@@ -29,8 +31,7 @@
   loop: "{{ java_versions }}"
 
 - name: Get all candidates' java home from sdkman
-  ansible.builtin.shell:
-    "{{ terminal_init }} && sdk home java {{ item }}"
+  ansible.builtin.shell: "{{ terminal_init }} && sdk home java {{ item }}"
   args:
     executable: /bin/zsh
   register: candidates_java_home

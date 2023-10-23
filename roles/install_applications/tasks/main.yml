@@ -2,7 +2,7 @@
 - name: Check if brew is installed
   community.general.homebrew:
     update_homebrew: true
-    check_mode: true
+  check_mode: true
   failed_when: false
   register: brew_installed
 

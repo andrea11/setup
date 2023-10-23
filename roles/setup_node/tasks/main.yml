@@ -1,11 +1,13 @@
 ---
-- name: Set terminal_init variable
+- name: Set nvm_init variable
   ansible.builtin.set_fact:
-    terminal_init: "source {{ lookup('env', 'HOME') }}/.zshrc"
+    nvm_init:
+      export PATH="$PATH:/usr/local/bin:/opt/homebrew/bin" && export
+      NVM_DIR="$HOME/.nvm" && source "$(brew --prefix)/opt/nvm/nvm.sh"
 
 - name: Install latest node via nvm
   ansible.builtin.shell:
-    "{{ terminal_init }} && nvm install --skip-default-packages --default node"
+    "{{ nvm_init }} && nvm install --skip-default-packages --default node"
   register: nvm_install_latest_node
   args:
     executable: /bin/zsh
@@ -13,8 +15,7 @@
   failed_when: nvm_install_latest_node.rc != 0
 
 - name: Verify pnpm is installed via nvm exec
-  ansible.builtin.shell:
-    "{{ terminal_init }} && nvm exec pnpm --version"
+  ansible.builtin.shell: "{{ nvm_init }} && nvm exec pnpm --version"
   args:
     executable: /bin/zsh
   register: pnpm_version
@@ -22,8 +23,7 @@
   failed_when: false
 
 - name: Install pnpm via nvm
-  ansible.builtin.shell:
-    "{{ terminal_init }} && nvm exec npm install -g pnpm"
+  ansible.builtin.shell: "{{ nvm_init }} && nvm exec npm install -g pnpm"
   args:
     executable: /bin/zsh
   register: pnpm_installation
