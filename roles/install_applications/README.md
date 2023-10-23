@@ -16,6 +16,16 @@ None
 
 `install_applications_taps`, `install_applications_formulae`, and `install_applications_casks` are lists of strings.
 
+If you want to install a cask that requires sudo privileges, you can use the `sudo_password` variable. Set it in your playbook, for example:
+
+```yaml
+vars_prompt:
+  - name: sudo_password
+    prompt: "Enter your sudo password"
+    private: yes
+    unsafe: true
+```
+
 ## Dependencies
 
 None

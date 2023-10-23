@@ -24,6 +24,16 @@ None
 
 Read more about the `osx_defaults` module [here](https://docs.ansible.com/ansible/latest/collections/community/general/osx_defaults_module.html).
 
+If you want to set a default that requires sudo privileges, you can use the `sudo_password` variable. Set it in your playbook, for example:
+
+```yaml
+vars_prompt:
+  - name: sudo_password
+    prompt: "Enter your sudo password"
+    private: yes
+    unsafe: true
+```
+
 ## Dependencies
 
 This role depends on the following roles:

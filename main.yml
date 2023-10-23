@@ -3,7 +3,7 @@
   hosts: localhost
   vars_prompt:
     - name: sudo_password
-      prompt: What is your password?
+      prompt: Password (used for sudo if needed)
       unsafe: true
       private: true
   vars:
