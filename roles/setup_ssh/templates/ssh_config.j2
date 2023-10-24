@@ -4,7 +4,7 @@ Host *
 {%- if identity_agent is defined +%}
     IdentityAgent "{{identity_agent}}"
 {%- endif +%}
-{%- if identity_agent is not defined and identity_file_path is defined +%}
+{%- if identity_file_path is defined +%}
 IdentityFile {{ identity_file_path }}
 {%- endif +%}
 IdentitiesOnly yes

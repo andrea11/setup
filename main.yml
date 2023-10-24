@@ -269,7 +269,7 @@
         - domain: com.apple.AppleMultitouchTrackpad
           key: TrackpadThreeFingerDrag
           value: true
-          type: bool
+          type: string
           state: present
         - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
           key: AppleMultitouchTrackpad
@@ -356,8 +356,8 @@
           state: present
         - domain: dev.kdrag0n.MacVirt
           key: onboardingCompleted
-          value: string
-          type: bool
+          value: true
+          type: string
           state: present
         - domain: com.apple.HIToolbox
           key: AppleCurrentKeyboardLayoutInputSourceID
@@ -401,8 +401,8 @@
           state: present
         - domain: com.apple.Safari
           key: IncludeInternalDebugMenu
-          value: string
-          type: bool
+          value: true
+          type: string
           state: present
         - domain: com.apple.Safari
           key: IncludeDevelopMenu
