@@ -8,7 +8,6 @@
       private: true
   vars:
     home: "{{ lookup('env', 'HOME') }}"
-    github:
     github_email: 10788630+andrea11@users.noreply.github.com
     work_email: !vault |
       $ANSIBLE_VAULT;1.1;AES256

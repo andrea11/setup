@@ -7,12 +7,7 @@ on:
 jobs:
   integration-test:
     name: Integration test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - macos-latest
-          - macos-13
+    runs-on: macos-latest
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v3

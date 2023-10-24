@@ -1,0 +1,303 @@
+---
+- name: Setup laptop environment
+  hosts: localhost
+  vars_prompt:
+    - name: sudo_password
+      prompt: Password (used for sudo if needed)
+      unsafe: true
+      private: true
+  vars:
+    home: "{{ lookup('env', 'HOME') }}"
+    github_email: 10788630+andrea11@users.noreply.github.com
+    work_email: "<work_email>"
+    public_name: andrea11
+    private_name: "<private_name>"
+  roles:
+    - role: andrea11.macos_setup.install_applications
+      install_applications_formulae:
+        - docker-compose
+        - geckodriver
+        - gnupg
+        - jq
+        - libfido2
+        - nvm
+        - openssh
+        - pinentry-mac
+        - pre-commit
+        - pyenv
+        - pyenv-virtualenv
+        - protobuf
+        - sdkman-cli
+        - watch
+        - wget
+        - ykman
+        - zoxide
+      install_applications_casks:
+        - 1password
+        - 1password-cli
+        - aws-vault
+        - finicky
+        - firefox
+        - font-fira-code
+        - google-chrome
+        - hpedrorodrigues/tools/dockutil
+        - intellij-idea
+        - microsoft-edge
+        - orbstack
+        - rectangle
+        - spotify
+        - visual-studio-code
+        - warp
+        - whatsapp
+      install_applications_taps:
+        - homebrew/cask-fonts
+        - sdkman/tap
+    - role: setup_finicky
+      setup_finicky_rules:
+        - match: [/nexthink/]
+          browser: Google Chrome
+        - match: ({ opener }) => opener.name === "Microsoft Teams"
+          browser: Google Chrome
+        - match: ({ opener }) => opener.name === "Microsoft Outlook"
+          browser: Google Chrome
+        - match:
+            ({ url }) => url.host === "device.sso.eu-central-1.amazonaws.com"
+          browser: Google Chrome
+        - match: () => finicky.getKeys().function
+          browser: Google Chrome
+    - role: setup_zsh
+      setup_zsh_aliases:
+        - alias: cd
+          command: z
+        - alias: npm
+          command: pnpm
+        - alias: ..
+          command: cd ..
+        - alias: "..."
+          command: cd ../..
+        - alias: "...."
+          command: cd ../../..
+      setup_zsh_use_oh_my_zsh: true
+      setup_zsh_oh_my_zsh_plugins:
+        - git
+        - zoxide
+      setup_zsh_use_sdkman: true
+      setup_zsh_use_nvm: true
+      setup_zsh_use_gpg: true
+    - role: setup_ssh
+      setup_ssh_configurations:
+        - name: github_work
+          allowed_signers_path: "{{ home }}/.ssh/allowed_signers"
+          user_email: "{{ work_email }}"
+          identity_agent:
+            "{{ home }}/Library/Group
+            Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+          signature:
+            algorithm: ed25519
+            private_key: <private_key>
+            public_key: <public_key>
+          authentication:
+            algorithm: ed25519
+            public_key: <public_key>
+        - name: github_personal
+          allowed_signers_path: "{{ home }}/.ssh/allowed_signers"
+          user_email: "{{ github_email }}"
+          identity_agent:
+            "{{ home }}/Library/Group
+            Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+          signature:
+            algorithm: ed25519
+            public_key: <public_key>
+          authentication:
+            algorithm: ed25519
+            public_key: <public_key>
+    - role: setup_git
+      setup_git_workspaces:
+        - name: github_work
+          path: "{{ home }}/Workspace"
+          user_name: "{{ private_name }}"
+          user_email: "{{ work_email }}"
+          ssh:
+            public_key_path: "{{ home }}/.ssh/github_work_signature_ed25519.pub"
+            allowed_signers_path: "{{ home }}/.ssh/allowed_signers"
+        - name: github_personal
+          path: "{{ home }}/Github"
+          user_name: "{{ public_name }}"
+          user_email: "{{ github_email }}"
+          ssh:
+            program: /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+            public_key_path:
+              "{{ home }}/.ssh/github_personal_signature_ed25519.pub"
+            allowed_signers_path: "{{ home }}/.ssh/allowed_signers"
+    - role: setup_java
+      setup_java_java_major_versions:
+        - 11
+        - 17
+    - role: setup_node
+    - role: setup_python
+    - role: customize_dock
+      customize_dock_dock_items:
+        - name: Launchpad
+          path: /System/Applications/Launchpad.app
+          position: 1
+        - name: Microsoft Outlook
+          path: /Applications/Microsoft Outlook.app
+          position: 2
+        - name: Safari
+          path: /System/Cryptexes/App/System/Applications/Safari.app
+          position: 3
+        - name: Google Chrome
+          path: /Applications/Google Chrome.app
+          position: 4
+        - name: Microsoft Teams
+          path: /Applications/Microsoft Teams classic.app
+          position: 5
+        - name: App Store
+          path: /Applications/App Store.app
+          position: 6
+        - name: System Settings
+          path: /System/Applications/System Settings.app
+          position: 7
+    - role: customize_defaults
+      customize_defaults_settings:
+        - domain: com.apple.AppleMultitouchTrackpad
+          key: Clicking
+          value: 1
+          type: string
+          state: present
+        - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+          key: Clicking
+          value: 1
+          type: string
+          state: present
+        - domain: com.apple.AppleMultitouchTrackpad
+          key: TrackpadThreeFingerDrag
+          value: true
+          type: string
+          state: present
+        - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+          key: AppleMultitouchTrackpad
+          value: true
+          type: string
+          state: present
+        - domain: com.apple.AppleMultitouchTrackpad
+          key: TrackpadFourFingerVertSwipeGesture
+          value: 2
+          type: string
+          state: present
+        - domain: com.apple.dock
+          key: showAppExposeGestureEnabled
+          value: true
+          type: string
+          state: present
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.scaling
+          value: 2
+          type: string
+          state: present
+        - domain: dev.warp.Warp-Stable
+          key: AliasExpansionBannerSeen
+          value: "true"
+          type: string
+          state: present
+        - domain: dev.warp.Warp-Stable
+          key: AliasExpansionEnabled
+          value: "true"
+          type: string
+          state: present
+        - domain: dev.warp.Warp-Stable
+          key: Theme
+          value: '"RedRock"'
+          type: string
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: SUEnableAutomaticChecks
+          value: 1
+          type: integer
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: hideMenubarIcon
+          value: 1
+          type: string
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: launchOnLogin
+          value: 1
+          type: string
+          state: present
+        - domain: dev.kdrag0n.MacVirt
+          key: SUAutomaticallyUpdate
+          value: true
+          type: string
+          state: present
+        - domain: dev.kdrag0n.MacVirt
+          key: onboardingCompleted
+          value: true
+          type: string
+          state: present
+        - domain: com.apple.HIToolbox
+          key: AppleCurrentKeyboardLayoutInputSourceID
+          value: com.apple.keylayout.USInternational-PC
+          type: string
+          state: present
+        - domain: com.apple.LaunchServices
+          key: LSQuarantine
+          value: false
+          type: string
+          state: present
+        - domain: com.apple.BluetoothAudioAgent
+          key: Apple Bitpool Min (editable)
+          value: 40
+          type: string
+          state: present
+        - domain: com.apple.finder
+          key: AppleShowAllFiles
+          value: true
+          type: string
+          state: present
+        - domain: NSGlobalDomain
+          key: AppleShowAllExtensions
+          value: true
+          type: string
+          state: present
+        - domain: com.apple.Safari
+          key: HomePage
+          value: about:blank
+          type: string
+          state: present
+        - domain: com.apple.Safari
+          key: ShowFavoritesBar
+          value: false
+          type: string
+          state: present
+        - domain: com.apple.Safari
+          key: FindOnPageMatchesWordStartsOnly
+          value: false
+          type: string
+          state: present
+        - domain: com.apple.Safari
+          key: IncludeInternalDebugMenu
+          value: true
+          type: string
+          state: present
+        - domain: com.apple.Safari
+          key: IncludeDevelopMenu
+          value: true
+          type: string
+          state: present
+        - domain: com.apple.Safari
+          key: WebKitDeveloperExtrasEnabledPreferenceKey
+          value: true
+          type: string
+          state: present
+        - domain: com.apple.Safari
+          key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled # yamllint disable-line
+          value: true
+          type: string
+          state: present
+        - domain: NSGlobalDomain
+          key: WebKitDeveloperExtras
+          value: true
+          type: string
+          state: present
+    - role: launch_applications_first_time
