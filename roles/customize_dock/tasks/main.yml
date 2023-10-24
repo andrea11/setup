@@ -12,7 +12,6 @@
       \ | union([get_dock_items_task.stdout_lines | select('search',
       'persistentApps')\
       \ | map('regex_replace', '^(.*?)\\t.*', '\\1')]) | flatten }}"
-  loop: "{{ customize_dock_dock_items }}"
 
 - name: Check if all desired dock items are present
   ansible.builtin.set_fact:

@@ -244,7 +244,7 @@
         - name: Google Chrome
           path: /Applications/Google Chrome.app
           position: 4
-        - name: Microsoft Teams
+        - name: Microsoft Teams classic
           path: /Applications/Microsoft Teams classic.app
           position: 5
         - name: App Store
@@ -278,12 +278,12 @@
         - domain: com.apple.AppleMultitouchTrackpad
           key: TrackpadFourFingerVertSwipeGesture
           value: 2
-          type: string
+          type: integer
           state: present
         - domain: com.apple.dock
           key: showAppExposeGestureEnabled
           value: true
-          type: string
+          type: boolean
           state: present
         - domain: Apple Global Domain
           key: com.apple.trackpad.scaling
@@ -302,7 +302,7 @@
           state: present
         - domain: dev.warp.Warp-Stable
           key: Theme
-          value: '"RedRock"'
+          value: "'RedRock'"
           type: string
           state: present
         - domain: com.knollsoft.Rectangle
