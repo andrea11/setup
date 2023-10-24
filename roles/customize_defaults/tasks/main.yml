@@ -1,11 +1,9 @@
 ---
 - name: Set macOS defaults
-  become: true
-  vars:
-    ansible_become_pass: "{{ sudo_password | default(omit) }}"
   community.general.osx_defaults:
     domain: "{{ item.domain }}"
     key: "{{ item.key }}"
     value: "{{ item.value }}"
     type: "{{ item.type }}"
+    host: "andrea.accardo"
   loop: "{{ customize_defaults_settings }}"

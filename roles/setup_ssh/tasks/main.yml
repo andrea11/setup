@@ -8,7 +8,8 @@
 - name: Generate authentication public ssh key files per each workspace
   ansible.builtin.copy:
     content: "{{ item.authentication.public_key }}"
-    dest: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_authentication_{{
+    dest:
+      "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name }}_authentication_{{
       item.authentication.algorithm }}.pub"
     mode: u=rw,go=r
   loop: "{{ setup_ssh_configurations }}"
@@ -62,5 +63,5 @@
   vars:
     identity_file_path: "{{ lookup('env', 'HOME') }}/.ssh/{{ item.name
       }}_authentication_{{\
-      \ item.authentication.algorithm }}.pub"
+      \ item.authentication.algorithm }}"
     identity_agent: "{{ item.identity_agent }}"

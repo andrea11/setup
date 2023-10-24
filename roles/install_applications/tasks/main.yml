@@ -1,9 +1,12 @@
 ---
+- name: Set brew_init variable
+  ansible.builtin.set_fact:
+    brew_init: export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
+
 - name: Check if brew is installed
-  community.general.homebrew:
-    update_homebrew: true
-  check_mode: true
-  failed_when: false
+  ansible.builtin.shell: "{{ brew_init }} && brew --version"
+  ignore_errors: true
+  changed_when: false
   register: brew_installed
 
 - name: Install Homebrew
@@ -13,7 +16,7 @@
     /dev/null
   args:
     creates: /usr/local/bin/brew
-  when: brew_installed is failed
+  when: brew_installed.rc != 0
 
 - name: Install taps
   community.general.homebrew_tap:
