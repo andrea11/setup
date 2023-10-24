@@ -1,7 +1,7 @@
 {%- set homebrew_load -%}
 	{%- if is_apple_silicon %}
 		# Load homebrew
-		export PATH="$PATH:/opt/homebrew/bin"
+		export PATH="/opt/homebrew/bin:$PATH"
 	{% endif %}
 {%- endset -%}
 

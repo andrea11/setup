@@ -1,15 +1,9 @@
 ---
-- name: Verify if finicky is configured
-  ansible.builtin.stat:
-    path: "{{ lookup('env', 'HOME') }}/.finicky.js"
-  register: finicky_check
-
 - name: Setup finicky if not yet configured
   ansible.builtin.template:
     src: finicky.j2
     dest: "{{ lookup('env', 'HOME') }}/.finicky.js"
     mode: u=rw,g=rw,o=r
-  when: not finicky_check.stat.exists
   vars:
     default_browser: "{{ setup_finicky_default_browser }}"
     redirect_http_to_https: "{{ setup_finicky_redirect_http_to_https }}"

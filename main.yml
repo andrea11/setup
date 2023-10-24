@@ -259,12 +259,12 @@
         - domain: com.apple.AppleMultitouchTrackpad
           key: Clicking
           value: 1
-          type: int
+          type: string
           state: present
         - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
           key: Clicking
           value: 1
-          type: int
+          type: string
           state: present
         - domain: com.apple.AppleMultitouchTrackpad
           key: TrackpadThreeFingerDrag
@@ -274,22 +274,22 @@
         - domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
           key: AppleMultitouchTrackpad
           value: true
-          type: bool
+          type: string
           state: present
         - domain: com.apple.AppleMultitouchTrackpad
           key: TrackpadFourFingerVertSwipeGesture
           value: 2
-          type: int
+          type: string
           state: present
         - domain: com.apple.dock
           key: showAppExposeGestureEnabled
           value: true
-          type: bool
+          type: string
           state: present
         - domain: Apple Global Domain
           key: com.apple.trackpad.scaling
           value: 2
-          type: float
+          type: string
           state: present
         - domain: dev.warp.Warp-Stable
           key: AliasExpansionBannerSeen
@@ -314,12 +314,12 @@
         - domain: com.knollsoft.Rectangle
           key: hideMenubarIcon
           value: 1
-          type: integer
+          type: string
           state: present
         - domain: com.knollsoft.Rectangle
           key: launchOnLogin
           value: 1
-          type: integer
+          type: string
           state: present
         # - domain: com.knollsoft.Rectangle
         #   key: bottomLeft
@@ -352,11 +352,11 @@
         - domain: dev.kdrag0n.MacVirt
           key: SUAutomaticallyUpdate
           value: true
-          type: bool
+          type: string
           state: present
         - domain: dev.kdrag0n.MacVirt
           key: onboardingCompleted
-          value: true
+          value: string
           type: bool
           state: present
         - domain: com.apple.HIToolbox
@@ -367,22 +367,22 @@
         - domain: com.apple.LaunchServices
           key: LSQuarantine
           value: false
-          type: bool
+          type: string
           state: present
         - domain: com.apple.BluetoothAudioAgent
           key: Apple Bitpool Min (editable)
           value: 40
-          type: int
+          type: string
           state: present
         - domain: com.apple.finder
           key: AppleShowAllFiles
           value: true
-          type: bool
+          type: string
           state: present
         - domain: NSGlobalDomain
           key: AppleShowAllExtensions
           value: true
-          type: bool
+          type: string
           state: present
         - domain: com.apple.Safari
           key: HomePage
@@ -392,16 +392,16 @@
         - domain: com.apple.Safari
           key: ShowFavoritesBar
           value: false
-          type: bool
+          type: string
           state: present
         - domain: com.apple.Safari
           key: FindOnPageMatchesWordStartsOnly
           value: false
-          type: bool
+          type: string
           state: present
         - domain: com.apple.Safari
           key: IncludeInternalDebugMenu
-          value: true
+          value: string
           type: bool
           state: present
         - domain: com.apple.Safari
@@ -412,17 +412,17 @@
         - domain: com.apple.Safari
           key: WebKitDeveloperExtrasEnabledPreferenceKey
           value: true
-          type: bool
+          type: string
           state: present
         - domain: com.apple.Safari
           key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled # yamllint disable-line
           value: true
-          type: bool
+          type: string
           state: present
         - domain: NSGlobalDomain
           key: WebKitDeveloperExtras
           value: true
-          type: bool
+          type: string
           state: present
           # Keyboard - Set US international language
           # - domain: com.apple.HIToolbox
