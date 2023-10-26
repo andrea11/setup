@@ -1,6 +1,6 @@
 module.exports = {
   defaultBrowser: "{{ default_browser }}",
-  {% if redirect_http_to_https %}
+  {%- if redirect_http_to_https +%}
   rewrite: [
     {
       // Redirect all urls to use https
@@ -8,13 +8,13 @@ module.exports = {
       url: { protocol: "https" },
     },
   ],
-  {% endif %}
+  {% endif -%}
   handlers: [
-    {% for rule in setup_finicky_rules %}
+  {%- for rule in setup_finicky_rules +%}
     {
-      match: handler.match,
-      browser: handler.browser,
+      match: {{ rule.match }},
+      browser: "{{ rule.browser }}",
     },
-    {% endfor %}
+  {% endfor -%}
   ]
 };

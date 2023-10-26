@@ -1,0 +1,79 @@
+---
+- name: Set pyenv_init variable
+  ansible.builtin.set_fact:
+    pyenv_init: export PATH="$PATH:/usr/local/bin:/opt/homebrew/bin"
+
+- name: Retrieve installed python versions available via pyenv
+  ansible.builtin.command: pyenv install --list
+  changed_when: false
+  register: installed_python_versions
+
+- name: Set python_regex_version variable
+  ansible.builtin.set_fact:
+    python_regex_version: "(?<![\\w\\d.-])([\\d+.]+)(?![\\w\\d.-])"
+
+- name: Set latest pyenv python version
+  ansible.builtin.set_fact:
+    latest_pyenv_python_version:
+      "{{ installed_python_versions.stdout | regex_findall(python_regex_version)
+      | community.general.version_sort | last }}"
+  changed_when: false
+
+- name: Set python versions candidates
+  ansible.builtin.set_fact:
+    python_versions_candidates:
+      "{{ setup_python_python_versions | length |
+      ternary(setup_python_python_versions, [latest_pyenv_python_version]) }}"
+
+- name: Set latest python version
+  ansible.builtin.set_fact:
+    latest_python_version:
+      "{{ python_versions_candidates | community.general.version_sort | last }}"
+  changed_when: false
+
+- name: Get installed python versions
+  ansible.builtin.command: pyenv versions --bare
+  changed_when: false
+  register: installed_python_versions
+
+- name: Set installed python versions
+  ansible.builtin.set_fact:
+    installed_python_versions: "{{ installed_python_versions.stdout_lines }}"
+
+- name: Check if python versions are installed
+  ansible.builtin.set_fact:
+    are_python_versions_installed:
+      "{{ python_versions_candidates | difference(installed_python_versions) |
+      length == 0 }}"
+
+- name: Install latest python via pyenv
+  ansible.builtin.command: "pyenv install --skip-existing {{ item }}"
+  changed_when: true
+  loop: "{{ python_versions_candidates }}"
+  when: not are_python_versions_installed
+
+- name: Get current global python version
+  ansible.builtin.command: pyenv global
+  changed_when: false
+  register: global_python_version
+
+- name: Set global python version
+  ansible.builtin.set_fact:
+    global_python_version: "{{ global_python_version.stdout | trim }}"
+
+- name: Set global python candidate version
+  ansible.builtin.set_fact:
+    global_python_candidate_version:
+      "{{ setup_python_python_global_version if
+      setup_python_python_global_version != None else latest_python_version }}"
+
+- name: Set pyenv global python version
+  ansible.builtin.command: "pyenv global {{ global_python_candidate_version }}"
+  changed_when: true
+  when: global_python_version != global_python_candidate_version
+
+- name: Install python packages
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ setup_python_python_packages }}"

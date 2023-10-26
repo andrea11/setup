@@ -52,7 +52,7 @@
       install_applications_taps:
         - homebrew/cask-fonts
         - sdkman/tap
-    - role: setup_finicky
+    - role: andrea11.macos_setup.setup_finicky
       setup_finicky_rules:
         - match: [/nexthink/]
           browser: Google Chrome
@@ -65,7 +65,7 @@
           browser: Google Chrome
         - match: () => finicky.getKeys().function
           browser: Google Chrome
-    - role: setup_zsh
+    - role: andrea11.macos_setup.setup_zsh
       setup_zsh_aliases:
         - alias: cd
           command: z
@@ -84,7 +84,7 @@
       setup_zsh_use_sdkman: true
       setup_zsh_use_nvm: true
       setup_zsh_use_gpg: true
-    - role: setup_ssh
+    - role: andrea11.macos_setup.setup_ssh
       setup_ssh_configurations:
         - name: github_work
           allowed_signers_path: "{{ home }}/.ssh/allowed_signers"
@@ -111,7 +111,7 @@
           authentication:
             algorithm: ed25519
             public_key: <public_key>
-    - role: setup_git
+    - role: andrea11.macos_setup.setup_git
       setup_git_workspaces:
         - name: github_work
           path: "{{ home }}/Workspace"
@@ -129,13 +129,13 @@
             public_key_path:
               "{{ home }}/.ssh/github_personal_signature_ed25519.pub"
             allowed_signers_path: "{{ home }}/.ssh/allowed_signers"
-    - role: setup_java
+    - role: andrea11.macos_setup.setup_java
       setup_java_java_major_versions:
         - 11
         - 17
-    - role: setup_node
-    - role: setup_python
-    - role: customize_dock
+    - role: andrea11.macos_setup.setup_node
+    - role: andrea11.macos_setup.setup_python
+    - role: andrea11.macos_setup.customize_dock
       customize_dock_dock_items:
         - name: Launchpad
           path: /System/Applications/Launchpad.app
@@ -158,7 +158,7 @@
         - name: System Settings
           path: /System/Applications/System Settings.app
           position: 7
-    - role: customize_defaults
+    - role: andrea11.macos_setup.customize_defaults
       customize_defaults_settings:
         - domain: com.apple.AppleMultitouchTrackpad
           key: Clicking
@@ -300,4 +300,4 @@
           value: true
           type: string
           state: present
-    - role: launch_applications_first_time
+    - role: andrea11.macos_setup.launch_applications_first_time

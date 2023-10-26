@@ -1,0 +1,14 @@
+---
+- name: Transform values to be compatible with defaults signature
+  set_fact:
+    transformed_customize_defaults_settings:
+      "{{ transformed_customize_defaults_settings | default([]) + [item |
+      combine({'value': item.value | andrea11.macos_setup.format_macos_defaults
+      | join(' ')})] }}"
+  loop: "{{ customize_defaults_settings }}"
+
+- name: Set macOS defaults
+  ansible.builtin.command:
+    "defaults {{ '-currentHost' if item.currentHost | default(false) }} write
+    '{{ item.domain }}' '{{ item.key }}' -{{ item.type }} {{item.value }}"
+  loop: "{{ transformed_customize_defaults_settings }}"

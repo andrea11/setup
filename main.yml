@@ -64,20 +64,20 @@
       install_applications_taps:
         - homebrew/cask-fonts
         - sdkman/tap
-    - role: setup_finicky
-      setup_finicky_rules:
+    - role: andrea11.macos_setup.setup_finicky
+      setup_finicky_setup_finicky_rules:
         - match: [/nexthink/]
           browser: Google Chrome
-        - match: ({ opener }) => opener.name === "Microsoft Teams"
+        - match: ({ opener }) => opener.name.includes("Microsoft Teams")
           browser: Google Chrome
-        - match: ({ opener }) => opener.name === "Microsoft Outlook"
+        - match: ({ opener }) => opener.name.includes("Microsoft Outlook")
           browser: Google Chrome
         - match:
             ({ url }) => url.host === "device.sso.eu-central-1.amazonaws.com"
           browser: Google Chrome
         - match: () => finicky.getKeys().function
           browser: Google Chrome
-    - role: setup_zsh
+    - role: andrea11.macos_setup.setup_zsh
       setup_zsh_aliases:
         - alias: cd
           command: z
@@ -95,8 +95,10 @@
         - zoxide
       setup_zsh_use_sdkman: true
       setup_zsh_use_nvm: true
+      setup_zsh_use_pyenv: true
+      setup_zsh_use_pyenv_virtualenv: true
       setup_zsh_use_gpg: true
-    - role: setup_ssh
+    - role: andrea11.macos_setup.setup_ssh
       setup_ssh_configurations:
         - name: github_work
           allowed_signers_path: "{{ home }}/.ssh/allowed_signers"
@@ -202,7 +204,7 @@
               33616235623732656563653266623330373632356330346636616330363130353430363864303132
               37623537396566373937393837666336393464383866343334623234396466393965376563666437
               3864
-    - role: setup_git
+    - role: andrea11.macos_setup.setup_git
       setup_git_workspaces:
         - name: github_work
           path: "{{ home }}/Workspace"
@@ -220,7 +222,7 @@
             public_key_path:
               "{{ home }}/.ssh/github_personal_signature_ed25519.pub"
             allowed_signers_path: "{{ home }}/.ssh/allowed_signers"
-    - role: setup_java
+    - role: andrea11.macos_setup.setup_java
       setup_java_java_major_versions:
         - 11
         - 17
@@ -228,9 +230,11 @@
         - url: artifactory.intra.nexthink.com
           port: 443
           alias: Nexthink Artifactory
-    - role: setup_node
-    - role: setup_python
-    - role: customize_dock
+    - role: andrea11.macos_setup.setup_node
+    - role: andrea11.macos_setup.setup_python
+      setup_python_python_versions:
+        - 3.11.6
+    - role: andrea11.macos_setup.customize_dock
       customize_dock_dock_items:
         - name: Launchpad
           path: /System/Applications/Launchpad.app
@@ -253,7 +257,7 @@
         - name: System Settings
           path: /System/Applications/System Settings.app
           position: 7
-    - role: customize_defaults
+    - role: andrea11.macos_setup.customize_defaults
       customize_defaults_settings:
         - domain: com.apple.AppleMultitouchTrackpad
           key: Clicking
@@ -290,6 +294,91 @@
           value: 2
           type: string
           state: present
+        - domain: Apple Global Domain
+          key: com.apple.mouse.tapBehavior
+          value: 1
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.enableSecondaryClick
+          value: 1
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.fiveFingerPinchSwipeGesture
+          value: 2
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.fourFingerHorizSwipeGesture
+          value: 2
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.fourFingerPinchSwipeGesture
+          value: 2
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.fourFingerVertSwipeGesture
+          value: 2
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.momentumScroll
+          value: 1
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.pinchGesture
+          value: 1
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.rotateGesture
+          value: 1
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.scrollBehavior
+          value: 2
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.threeFingerDragGesture
+          value: 0
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.threeFingerHorizSwipeGesture
+          value: 2
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.threeFingerTapGesture
+          value: 0
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.threeFingerVertSwipeGesture
+          value: 0
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.twoFingerDoubleTapGesture
+          value: 1
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.twoFingerFromRightEdgeSwipeGesture
+          value: 3
+          type: integer
+          currentHost: true
+        - domain: Apple Global Domain
+          key: com.apple.trackpad.version
+          value: 5
+          type: integer
+          currentHost: true
         - domain: dev.warp.Warp-Stable
           key: AliasExpansionBannerSeen
           value: "true"
@@ -302,7 +391,7 @@
           state: present
         - domain: dev.warp.Warp-Stable
           key: Theme
-          value: "'RedRock'"
+          value: \"RedRock\"
           type: string
           state: present
         - domain: com.knollsoft.Rectangle
@@ -320,34 +409,80 @@
           value: 1
           type: string
           state: present
-        # - domain: com.knollsoft.Rectangle
-        #   key: bottomLeft
-        #   value:
-        #     - keyCode: "115"
-        #       modifierFlags: "786432"
-        #   type: array
-        #   state: present
-        # - domain: com.knollsoft.Rectangle
-        #   key: bottomRight
-        #   value:
-        #     - keyCode: "119"
-        #       modifierFlags: "786432"
-        #   type: array
-        #   state: present
-        # - domain: com.knollsoft.Rectangle
-        #   key: topLeft
-        #   value:
-        #     - keyCode: "123"
-        #       modifierFlags: "917504"
-        #   type: array
-        #   state: present
-        # - domain: com.knollsoft.Rectangle
-        #   key: topRight
-        #   value:
-        #     - keyCode: "124"
-        #       modifierFlags: "917504"
-        #   type: array
-        #   state: present
+        - domain: com.knollsoft.Rectangle
+          key: maximize
+          value:
+            keyCode: 36
+            modifierFlags: 786432
+          type: dict
+          state: present
+
+        - domain: com.knollsoft.Rectangle
+          key: bottomHalf
+          value:
+            keyCode: 125
+            modifierFlags: 786432
+          type: dict
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: leftHalf
+          value:
+            keyCode: 123
+            modifierFlags: 786432
+          type: dict
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: rightHalf
+          value:
+            keyCode: 124
+            modifierFlags: 786432
+          type: dict
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: topHalf
+          value:
+            keyCode: 126
+            modifierFlags: 786432
+          type: dict
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: bottomLeft
+          value:
+            keyCode: "115"
+            modifierFlags: "786432"
+          type: dict
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: bottomRight
+          value:
+            keyCode: "119"
+            modifierFlags: "786432"
+          type: dict
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: topLeft
+          value:
+            keyCode: "123"
+            modifierFlags: "917504"
+          type: dict
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: topRight
+          value:
+            keyCode: "124"
+            modifierFlags: "917504"
+          type: dict
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: nextDisplay
+          value:
+          type: dict
+          state: present
+        - domain: com.knollsoft.Rectangle
+          key: previousDisplay
+          value:
+          type: dict
+          state: present
         - domain: dev.kdrag0n.MacVirt
           key: SUAutomaticallyUpdate
           value: true
@@ -451,4 +586,4 @@
           #   type: array
           #   state: present
           #   array_add: true
-    - role: launch_applications_first_time
+    - role: andrea11.macos_setup.launch_applications_first_time

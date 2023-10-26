@@ -14,13 +14,14 @@ None
 
 `customize_defaults_settings` is a list of dictionaries with the following keys:
 
-| Key      | Description                     |
-| -------- | ------------------------------- |
-| `domain` | Domain of the default to be set |
-| `key`    | Key of the default to be set    |
-| `value`  | Value of the default to be set  |
-| `type`   | Type of the default to be set   |
-| `state`  | State of the default to be set  |
+| Key           | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| `domain`      | Domain of the default to be set                      |
+| `key`         | Key of the default to be set                         |
+| `value`       | Value of the default to be set                       |
+| `type`        | Type of the default to be set                        |
+| `state`       | State of the default to be set                       |
+| `currentHost` | Whether to set the default for the current host only |
 
 Read more about the `osx_defaults` module [here](https://docs.ansible.com/ansible/latest/collections/community/general/osx_defaults_module.html).
 
@@ -42,6 +43,11 @@ This role depends on the following roles:
           value: 1
           type: int
           state: present
+        - domain: Apple Global Domain
+          key: com.apple.mouse.tapBehavior
+          value: 1
+          type: integer
+          currentHost: true
 ```
 
 ## License
