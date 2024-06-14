@@ -27,7 +27,10 @@
   roles:
     - role: andrea11.macos_setup.install_applications
       install_applications_formulae:
+        - bat
         - docker-compose
+        - dockutil
+        - eza
         - geckodriver
         - gnupg
         - jq
@@ -52,12 +55,13 @@
         - firefox
         - font-fira-code
         - google-chrome
-        - hpedrorodrigues/tools/dockutil
         - intellij-idea
         - microsoft-edge
+        - obsidian
         - orbstack
-        - rectangle
+        - raycast
         - spotify
+        - the-unarchiver
         - visual-studio-code
         - warp
         - whatsapp
@@ -66,14 +70,14 @@
         - sdkman/tap
     - role: andrea11.macos_setup.setup_finicky
       setup_finicky_setup_finicky_rules:
-        - match: [/nexthink/]
-          browser: Google Chrome
-        - match: ({ opener }) => opener.name.includes("Microsoft Teams")
-          browser: Google Chrome
-        - match: ({ opener }) => opener.name.includes("Microsoft Outlook")
+        - match: /zoom\.us\/join/
+          browser: "us.zoom.xos"
+        - match: ({ opener }) => opener.name?.includes("Microsoft ")
           browser: Google Chrome
         - match:
             ({ url }) => url.host === "device.sso.eu-central-1.amazonaws.com"
+          browser: Google Chrome
+        - match: /nexthink/
           browser: Google Chrome
         - match: () => finicky.getKeys().function
           browser: Google Chrome
@@ -81,8 +85,6 @@
       setup_zsh_aliases:
         - alias: cd
           command: z
-        - alias: npm
-          command: pnpm
         - alias: ..
           command: cd ..
         - alias: "..."
@@ -393,95 +395,6 @@
           key: Theme
           value: \"RedRock\"
           type: string
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: SUEnableAutomaticChecks
-          value: 1
-          type: integer
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: hideMenubarIcon
-          value: 1
-          type: string
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: launchOnLogin
-          value: 1
-          type: string
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: maximize
-          value:
-            keyCode: 36
-            modifierFlags: 786432
-          type: dict
-          state: present
-
-        - domain: com.knollsoft.Rectangle
-          key: bottomHalf
-          value:
-            keyCode: 125
-            modifierFlags: 786432
-          type: dict
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: leftHalf
-          value:
-            keyCode: 123
-            modifierFlags: 786432
-          type: dict
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: rightHalf
-          value:
-            keyCode: 124
-            modifierFlags: 786432
-          type: dict
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: topHalf
-          value:
-            keyCode: 126
-            modifierFlags: 786432
-          type: dict
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: bottomLeft
-          value:
-            keyCode: "115"
-            modifierFlags: "786432"
-          type: dict
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: bottomRight
-          value:
-            keyCode: "119"
-            modifierFlags: "786432"
-          type: dict
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: topLeft
-          value:
-            keyCode: "123"
-            modifierFlags: "917504"
-          type: dict
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: topRight
-          value:
-            keyCode: "124"
-            modifierFlags: "917504"
-          type: dict
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: nextDisplay
-          value:
-          type: dict
-          state: present
-        - domain: com.knollsoft.Rectangle
-          key: previousDisplay
-          value:
-          type: dict
           state: present
         - domain: dev.kdrag0n.MacVirt
           key: SUAutomaticallyUpdate

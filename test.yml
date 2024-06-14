@@ -69,8 +69,6 @@
       setup_zsh_aliases:
         - alias: cd
           command: z
-        - alias: npm
-          command: pnpm
         - alias: ..
           command: cd ..
         - alias: "..."

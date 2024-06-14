@@ -7,4 +7,5 @@
   vars:
     default_browser: "{{ setup_finicky_default_browser }}"
     redirect_http_to_https: "{{ setup_finicky_redirect_http_to_https }}"
+    open_zoom_link_in_app: "{{ setup_finicky_open_zoom_link_in_app }}"
     setup_finicky_rules: "{{ setup_finicky_setup_finicky_rules }}"

@@ -13,6 +13,7 @@ None
 | `setup_finicky_setup_finicky_rules`    | List of rules to be added to finicky | `[]`     |
 | `setup_finicky_default_browser`        | Default browser to be used           | `Safari` |
 | `setup_finicky_redirect_http_to_https` | Redirect http to https               | `true`   |
+| `setup_finicky_open_zoom_link_in_app`  | Open zoom links in zoom app          | `true`   |
 
 `setup_finicky_setup_finicky_rules` is a list of dictionaries with the following keys:
 
@@ -33,6 +34,7 @@ None
     - role: andrea11.macos_setup.setup_finicky
       setup_finicky_default_browser: "Firefox"
       setup_finicky_redirect_http_to_https: true
+      setup_finicky_open_zoom_link_in_app: false
       setup_finicky_setup_finicky_rules:
         - match: "finicky.dev"
           browser: "Google Chrome"
